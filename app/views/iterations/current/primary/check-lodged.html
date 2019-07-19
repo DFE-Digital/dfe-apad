@@ -1,0 +1,154 @@
+{% extends 'layout.html' %}
+
+{% block pageTitle %}
+    Check the total number of appeals
+{% endblock %}
+
+{% block beforeContent %}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <form action="in-favour.html">
+
+                <span class="govuk-caption-xl">Primary schools</span>
+                <h1 class="govuk-heading-xl">Check the total number of appeals</h1>
+
+                <h2 class="govuk-heading-m">All classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['p-lodged-all']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'lodged.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['p-withdrawn-all']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'withdrawn.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Heard'
+                            },
+                            value: {
+                                text: data['p-heard-all']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'heard.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }) }}
+
+                <h2 class="govuk-heading-m">Infant classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['p-lodged-infant']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'lodged.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['p-withdrawn-infant']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'withdrawn.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Heard'
+                            },
+                            value: {
+                                text: data['p-heard-infant']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'heard.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }) }}
+                
+
+                {{ govukButton ({
+                    html: 'Continue'
+                }) }}
+
+            </form>
+
+        </div>
+
+</div>
+
+{% endblock %}

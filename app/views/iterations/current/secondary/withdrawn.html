@@ -1,0 +1,49 @@
+{% extends 'layout.html' %} {% block pageTitle %} How many of these lodged
+appeals were withdrawn before reaching an appeals panel? {% endblock %} {% block
+beforeContent %}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="heard.html">
+			<span class="govuk-caption-xl">Secondary schools</span>
+			<h1 class="govuk-heading-xl">
+				How many of these lodged appeals were withdrawn before reaching an
+				appeals panel?
+			</h1>
+
+			{{
+				govukInsetText({
+					text:
+						'Include appeals that were no longer needed because a place was offered before a hearing.'
+				})
+			}}
+
+			{{ govukInput ({
+                    id: 's-withdrawn-all',
+                    name: 's-withdrawn-all',
+                    value: data['s-withdrawn-all'] if data['s-withdrawn-all'] else '',
+                    classes: 'govuk-input--width-5',
+                    label: {
+                        text: 'From all classes'
+                    }
+                }) }}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

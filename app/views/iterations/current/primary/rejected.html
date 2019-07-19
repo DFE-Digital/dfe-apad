@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block pageTitle %}
+    How many appeals were rejected?
+{% endblock %}
+
+{% block beforeContent %}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <form action="check-outcomes.html">
+
+                <span class="govuk-caption-xl">Primary schools</span>
+                <h1 class="govuk-heading-xl">How many appeals were rejected?</h1>
+
+                {{ govukInput ({
+                    id: 'p-rejected-all',
+                    name: 'p-rejected-all',
+                    value: data['p-rejected-all'] if data['p-rejected-all'] else '',
+                    classes: 'govuk-input--width-5',
+                    label: {
+                        text: 'From all classes'
+                    }
+                }) }}
+
+                {{ govukInput ({
+                    id: 'p-rejected-infant',
+                    name: 'p-rejected-infant',
+                    value: data['p-rejected-infant'] if data['p-rejected-infant'] else '',
+                    classes: 'govuk-input--width-5',
+                    label: {
+                        text: 'From infant classes'
+                    }
+                }) }}
+
+
+                {{ govukButton ({
+                    html: 'Continue'
+                }) }}
+
+            </form>
+
+        </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block pageTitle %}
+    Does your local authority have any voluntary controlled or community primary schools?
+{% endblock %}
+
+{% block beforeContent %}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <form action="lodged.html">
+
+                <span class="govuk-caption-xl">Primary schools</span>
+                <h1 class="govuk-heading-xl">Does your local authority have any voluntary controlled or community primary schools?</h1>
+
+                {{ govukInsetText ({
+                    text: 'This includes any voluntary controlled or community middle schools deemed as primary schools'
+                }) }}
+
+                {{ govukRadios ({
+                    classes: 'govuk-radios--inline',
+                    idPrefix: 'any-primary',
+                    name: 'any-primary',
+                    fieldset: {
+                        legend: {
+                            text: 'Does your local authority have any voluntary controlled or community primary schools?',
+                            isPageHeading: true,
+                            classes: 'govuk-visually-hidden'
+                        }
+                            },
+                            items: [
+                        {
+                            text: 'Yes',
+                            value: 'yes'
+                        },
+                        {
+                            text: 'No',
+                            value: 'no'
+                        }
+                    ]
+                }) }}
+
+                {{ govukButton ({
+                    html: 'Continue'
+                }) }}
+
+            </form>
+
+        </div>
+
+</div>
+
+{% endblock %}

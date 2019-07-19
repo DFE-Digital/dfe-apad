@@ -1,0 +1,90 @@
+{% extends 'layout.html' %} {% block pageTitle %} Check the total number of
+appeal outcomes {% endblock %} {% block beforeContent %}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="in-favour.html">
+			<span class="govuk-caption-xl">Secondary schools</span>
+			<h1 class="govuk-heading-xl">
+				Check the total number of appeal outcomes
+			</h1>
+
+			<h2 class="govuk-heading-m">All classes</h2>
+
+			{{
+				govukSummaryList({
+					rows: [
+						{
+							key: {
+								text: 'Total heard'
+							},
+							value: {
+								text: data['s-heard-all']
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: 'heard.html?from-p-outcome-totals=true',
+										visuallyHiddenText: 'heard'
+									}
+								]
+							}
+						},
+						{
+							key: {
+								text: 'In favour of parents'
+							},
+							value: {
+								text: data['s-in-favour-all']
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: 'in-favour.html?from-p-outcome-totals=true',
+										visuallyHiddenText: 'total lodged'
+									}
+								]
+							}
+						},
+						{
+							key: {
+								text: 'Rejected'
+							},
+							value: {
+								text: data['s-rejected-all']
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: 'rejected.html?from-p-outcome-totals=true',
+										visuallyHiddenText: 'withdrawn'
+									}
+								]
+							}
+						}
+					]
+				})
+			}}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

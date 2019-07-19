@@ -1,0 +1,55 @@
+{% extends 'layout.html' %} {% block pageTitle %} Start page {% endblock %} {%
+block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-xl">{{ serviceName }}</h1>
+
+		<p class="govuk-body">
+			Use this service to send your school admission appeals data collection.
+		</p>
+
+		<p class="govuk-body">Registering takes around 5 minutes.</p>
+
+		{{
+			govukButton({
+				text: 'Start now',
+				href: 'contact-details/contact-details.html',
+				classes:
+					'govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8'
+			})
+		}}
+
+		<h2 class="govuk-heading-m">Before you start</h2>
+
+		<p class="govuk-body">
+			You will need:
+		</p>
+
+		<ul class="govuk-list govuk-list--bullet">
+            <li>The number of appeals lodged by parents, including:</li>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>How many were withdrawn</li>
+                <li>How many led to an appeal heard by a panel</li>
+            </ul>
+            <li>The number of appeals heard by an appeals panel, including:</li>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>How many went in favour of parents</li>
+                <li>How many were rejected</li>
+            </ul>
+        </ul>
+
+        <p class="govuk-body">
+			Relating to:
+		</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>Community and controlled primary schools (including middle deemed primary)</li>
+            <li>Infant classes in community and controlled primary schools</li>
+            <li>Community and controlled secondary schools (including middle deemed secondary)</li>
+        </ul>
+
+	</div>
+</div>
+
+{% endblock %}

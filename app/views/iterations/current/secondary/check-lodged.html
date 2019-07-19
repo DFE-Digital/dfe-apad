@@ -1,0 +1,84 @@
+{% extends 'layout.html' %} {% block pageTitle %} Check the total number of
+appeals {% endblock %} {% block beforeContent %}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="in-favour.html">
+			<span class="govuk-caption-xl">Secondary schools</span>
+			<h1 class="govuk-heading-xl">Check the total number of appeals</h1>
+
+			{{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['s-lodged-all']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'lodged.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['s-withdrawn-all']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'withdrawn.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Heard'
+                            },
+                            value: {
+                                text: data['s-heard-all']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'heard.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }) }}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

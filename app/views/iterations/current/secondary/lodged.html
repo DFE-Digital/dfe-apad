@@ -1,0 +1,48 @@
+{% extends 'layout.html' %} {% block pageTitle %} How many appeals were lodged
+by parents for admissions to primary schools? {% endblock %} {% block
+beforeContent %}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="withdrawn.html">
+			<span class="govuk-caption-xl">Secondary schools</span>
+			<h1 class="govuk-heading-xl">
+				How many appeals were lodged by parents for admissions to secondary
+				schools?
+			</h1>
+
+			{{
+				govukInsetText({
+					text: 'Only tell us about voluntary controlled or community schools.'
+				})
+			}}
+
+			{{ govukInput ({
+                    id: 's-lodged-all',
+                    name: 's-lodged-all',
+                    value: data['s-lodged-all'] if data['s-lodged-all'] else '',
+                    classes: 'govuk-input--width-5',
+                    label: {
+                        text: 'From all classes'
+                    }
+                }) }}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}
