@@ -1,5 +1,15 @@
 {% extends 'layout.html' %}
 
+{% set allClassesQuery = (data['p-lodged-all'] | int) > [data['p-withdrawn-all'], data['p-heard-all']] | stringSum %}
+{% set allClassesError = (data['p-lodged-all'] | int) < [data['p-withdrawn-all'], data['p-heard-all']] | stringSum %}
+
+{% set allClassesFine = not allClassesQuery and not allClassesError %}
+
+{% set infantClassesQuery = (data['p-lodged-infant'] | int) > [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum %}
+{% set infantClassesError = (data['p-lodged-infant'] | int) < [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum %}
+
+{% set infantClassesFine = not infantClassesQuery and not infantClassesError %}
+
 {% block pageTitle %}
     Check the total number of appeals
 {% endblock %}
@@ -22,29 +32,12 @@
             <form action="in-favour.html">
 
                 <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">Check the total number of appeals</h1>
+                <h1 class="govuk-heading-xl">Check the appeals that were withdrawn or heard by an appeals panel against the total that were lodged</h1>
 
                 <h2 class="govuk-heading-m">All classes</h2>
 
                 {{ govukSummaryList ({
                     rows: [
-                        {
-                            key: {
-                                text: 'Total lodged'
-                            },
-                            value: {
-                                text: data['p-lodged-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        href: 'lodged.html?from-p-lodged-totals=true',
-                                        visuallyHiddenText: 'total lodged'
-                                    }
-                                ]
-                            }
-                        },
                         {
                             key: {
                                 text: 'Withdrawn'
@@ -78,11 +71,17 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            key: {
+                                text: 'Total actioned'
+                            },
+                            value: {
+                                text: [data['p-withdrawn-all'], data['p-heard-all']] | stringSum
+                            }
                         }
                     }
                 }) }}
-
-                <h2 class="govuk-heading-m">Infant classes</h2>
 
                 {{ govukSummaryList ({
                     rows: [
@@ -91,7 +90,7 @@
                                 text: 'Total lodged'
                             },
                             value: {
-                                text: data['p-lodged-infant']
+                                text: data['p-lodged-all']
                             },
                             actions: {
                                 items: [
@@ -102,7 +101,44 @@
                                     }
                                 ]
                             }
-                        },
+                        }
+                    }
+                }) }}
+
+                {% if not allClassesFine %}
+
+                    {% if allClassesQuery %}
+
+                        {% if not allClassesError and not infantClassesError %}
+
+                            {{ govukTextarea({
+                                id: 'lodged-query-all',
+                                name: 'lodged-query-all',
+                                value: data['lodged-query-all'] if data['lodged-query-all'] else '',
+                                label: {
+                                    text: 'Explain why there were ' + (data['p-lodged-all'] | int - [data['p-withdrawn-all'], data['p-heard-all']] | stringSum) + ' unresolved appeals for all classes'
+                                }
+                            }) }}
+
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% if allClassesError %}
+
+                        {{ govukErrorMessage({
+                            text: 'There cannot be more appeals actioned than the total number lodged, you must fix this before you can continue',
+                            visuallyHiddenText: 'Error'
+                        }) }}
+
+                    {% endif %}
+
+                {% endif %}
+
+                <h2 class="govuk-heading-m">Infant classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
                         {
                             key: {
                                 text: 'Withdrawn'
@@ -136,14 +172,77 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            key: {
+                                text: 'Total actioned'
+                            },
+                            value: {
+                                text: [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum
+                            }
                         }
                     }
                 }) }}
-                
 
-                {{ govukButton ({
-                    html: 'Continue'
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['p-lodged-infant']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        href: 'lodged.html?from-p-lodged-totals=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }) }}
+
+                {% if not infantClassesFine %}
+
+                    {% if infantClassesQuery %}
+
+                        {% if not allClassesError and not infantClassesError %}
+
+                            {{ govukTextarea({
+                                id: 'lodged-query-infant',
+                                name: 'lodged-query-infant',
+                                value: data['lodged-query-infant'] if data['lodged-query-infant'] else '',
+                                label: {
+                                    text: 'Explain why there were ' + (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum) + ' unresolved appeals for infant classes'
+                                }
+                            }) }}
+
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% if infantClassesError %}
+
+                        {{ govukErrorMessage({
+                            text: 'There cannot be more appeals actioned than the total number lodged, you must fix this before you can continue',
+                            visuallyHiddenText: 'Error'
+                        }) }}
+
+                    {% endif %}
+
+                {% endif %}
+                
+                {% if not allClassesError and not infantClassesError %}
+
+                    {{ govukButton ({
+                        html: 'Continue'
+                    }) }}
+
+                {% endif %}
 
             </form>
 

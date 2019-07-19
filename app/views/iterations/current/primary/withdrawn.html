@@ -19,7 +19,23 @@
 
         <div class="govuk-grid-column-two-thirds">
 
-            <form action="heard.html">
+            <form action="/validate-subset" method="POST">
+
+                {% set hasError = data['subsetError'] == 'true' %}
+                {% if hasError %}
+                    {{
+                        govukErrorSummary({
+                            titleText: 'There is a problem',
+                            errorList: [
+                                {
+                                    text:
+                                        'There cannot be more withdrawn appeals for infant classes than all classes together',
+                                    href: '#p-withdrawn-infant-error'
+                                }
+                            ]
+                        })
+                    }}
+                {% endif%}
 
                 <span class="govuk-caption-xl">Primary schools</span>
                 <h1 class="govuk-heading-xl">How many of these lodged appeals were withdrawn before reaching an appeals panel?</h1>
@@ -33,6 +49,7 @@
                     name: 'p-withdrawn-all',
                     value: data['p-withdrawn-all'] if data['p-withdrawn-all'] else '',
                     classes: 'govuk-input--width-5',
+                    type: 'number',
                     label: {
                         text: 'From all classes'
                     }
@@ -43,10 +60,16 @@
                     name: 'p-withdrawn-infant',
                     value: data['p-withdrawn-infant'] if data['p-withdrawn-infant'] else '',
                     classes: 'govuk-input--width-5',
+                    type: 'number',
+                    errorMessage: {
+                        text: 'There cannot be more withdrawn appeals for infant classes than all classes together'
+                    } if hasError,
                     label: {
                         text: 'From infant classes'
                     }
                 }) }}
+
+                <input type="hidden" name="next-page" value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/heard.html' }}" />
                 
 
                 {{ govukButton ({
