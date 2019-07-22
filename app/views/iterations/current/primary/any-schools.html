@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block pageTitle %}
-    Does your local authority have any voluntary controlled or community primary schools?
+    Does your local authority have any voluntary-controlled or community primary schools?
 {% endblock %}
 
 {% block beforeContent %}
@@ -31,10 +31,10 @@
             <form action="lodged.html">
 
                 <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">Does your local authority have any voluntary controlled or community primary schools?</h1>
+                <h1 class="govuk-heading-xl">Does your local authority have any voluntary-controlled or community primary schools?</h1>
 
                 {{ govukInsetText ({
-                    text: 'This includes any voluntary controlled or community middle schools deemed as primary schools'
+                    text: 'This includes any voluntary-controlled or community middle schools deemed as primary schools.'
                 }) }}
 
                 {{ govukRadios ({
@@ -43,7 +43,7 @@
                     name: 'any-primary',
                     fieldset: {
                         legend: {
-                            text: 'Does your local authority have any voluntary controlled or community primary schools?',
+                            text: 'Does your local authority have any voluntary-controlled or community primary schools?',
                             isPageHeading: true,
                             classes: 'govuk-visually-hidden'
                         }
