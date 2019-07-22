@@ -11,6 +11,15 @@
 
 {% block beforeContent %}
 
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
     {{ govukBackLink ({
         text: 'Back',
         href: 'javascript:history.back()'
@@ -24,7 +33,7 @@
 
         <div class="govuk-grid-column-two-thirds">
 
-            <form action="../secondary/any-schools.html">
+            <form action="{{ '../check-your-answers.html' if data['from-check'] else '../secondary/any-schools.html' }}">
 
                 <span class="govuk-caption-xl">Primary schools</span>
                 <h1 class="govuk-heading-xl">Check the total number of appeal outcomes against the number of appeals heard</h1>

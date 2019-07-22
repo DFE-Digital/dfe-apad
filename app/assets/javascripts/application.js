@@ -51,3 +51,15 @@ $('input[value*=\\#root\\#]').each((_, input) => {
 $('form[action*=\\#root\\#]').each((_, form) => {
 	$(form).attr('action', iterationRoute($(form).attr('action'), windowPath))
 })
+
+$('.govuk-summary-list__key').each(function() {
+	if (
+		$(this)
+			.text()
+			.trim() == ''
+	) {
+		$(this)
+			.closest('.govuk-summary-list__row')
+			.remove()
+	}
+})
