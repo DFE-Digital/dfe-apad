@@ -29,7 +29,7 @@
 
         <div class="govuk-grid-column-two-thirds">
 
-            <form action="in-favour.html">
+            <form action="{{ 'check-outcomes.html' if data['from-p-outcome-totals'] == 'true' else 'in-favour.html' }}">
 
                 <span class="govuk-caption-xl">Primary schools</span>
                 <h1 class="govuk-heading-xl">Check the appeals that were withdrawn or heard by an appeals panel against the total that were lodged</h1>
@@ -112,9 +112,9 @@
                         {% if not allClassesError and not infantClassesError %}
 
                             {{ govukTextarea({
-                                id: 'lodged-query-all',
-                                name: 'lodged-query-all',
-                                value: data['lodged-query-all'] if data['lodged-query-all'] else '',
+                                id: 'p-lodged-query-all',
+                                name: 'p-lodged-query-all',
+                                value: data['p-lodged-query-all'] if data['p-lodged-query-all'] else '',
                                 label: {
                                     text: 'Explain why there were ' + (data['p-lodged-all'] | int - [data['p-withdrawn-all'], data['p-heard-all']] | stringSum) + ' unresolved appeals for all classes'
                                 }
@@ -213,9 +213,9 @@
                         {% if not allClassesError and not infantClassesError %}
 
                             {{ govukTextarea({
-                                id: 'lodged-query-infant',
-                                name: 'lodged-query-infant',
-                                value: data['lodged-query-infant'] if data['lodged-query-infant'] else '',
+                                id: 'p-lodged-query-infant',
+                                name: 'p-lodged-query-infant',
+                                value: data['p-lodged-query-infant'] if data['p-lodged-query-infant'] else '',
                                 label: {
                                     text: 'Explain why there were ' + (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum) + ' unresolved appeals for infant classes'
                                 }

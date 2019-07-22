@@ -1,4 +1,8 @@
-{% extends 'layout.html' %} {% block pageTitle %} Check the total number of
+{% extends 'layout.html' %}
+
+{% set allClassesError = (data['s-heard-all'] | int) != [data['s-in-favour-all'], data['s-rejected-all']] | stringSum %}
+
+{% block pageTitle %} Check the total number of
 appeal outcomes {% endblock %} {% block beforeContent %}
 
 {{
@@ -12,77 +16,97 @@ appeal outcomes {% endblock %} {% block beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form action="in-favour.html">
+		<form action="../completion-time.html">
 			<span class="govuk-caption-xl">Secondary schools</span>
 			<h1 class="govuk-heading-xl">
-				Check the total number of appeal outcomes
+				Check the total number of appeal outcomes against the number of appeals heard
 			</h1>
 
-			<h2 class="govuk-heading-m">All classes</h2>
-
-			{{
-				govukSummaryList({
-					rows: [
-						{
-							key: {
-								text: 'Total heard'
-							},
-							value: {
-								text: data['s-heard-all']
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: 'heard.html?from-p-outcome-totals=true',
-										visuallyHiddenText: 'heard'
-									}
-								]
-							}
+			{{ govukSummaryList ({
+				rows: [
+					{
+						key: {
+							text: 'In favour of parents'
 						},
-						{
-							key: {
-								text: 'In favour of parents'
-							},
-							value: {
-								text: data['s-in-favour-all']
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: 'in-favour.html?from-p-outcome-totals=true',
-										visuallyHiddenText: 'total lodged'
-									}
-								]
-							}
+						value: {
+							text: data['s-in-favour-all']
 						},
-						{
-							key: {
-								text: 'Rejected'
-							},
-							value: {
-								text: data['s-rejected-all']
-							},
-							actions: {
-								items: [
-									{
-										text: 'Change',
-										href: 'rejected.html?from-p-outcome-totals=true',
-										visuallyHiddenText: 'withdrawn'
-									}
-								]
-							}
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: 'in-favour.html?from-s-outcome-totals=true',
+									visuallyHiddenText: 'total lodged'
+								}
+							]
 						}
-					]
-				})
-			}}
+					},
+					{
+						key: {
+							text: 'Rejected'
+						},
+						value: {
+							text: data['s-rejected-all']
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: 'rejected.html?from-s-outcome-totals=true',
+									visuallyHiddenText: 'withdrawn'
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Total outcomes'
+						},
+						value: {
+							text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum
+						}
+					}
+				]
+			}) }}
 
-			{{
-				govukButton({
-					html: 'Continue'
-				})
-			}}
+			{{ govukSummaryList ({
+				rows: [
+					{
+						key: {
+							text: 'Total heard'
+						},
+						value: {
+							text: data['s-heard-all']
+						},
+						actions: {
+							items: [
+								{
+									text: 'Review',
+									href: 'check-lodged.html?from-s-outcome-totals=true',
+									visuallyHiddenText: 'heard'
+								}
+							]
+						}
+					}
+				]
+			}) }}
+
+			{% if allClassesError %}
+
+				{{ govukErrorMessage({
+					text: 'There cannot be more appeal outcomes than the total number heard, you must fix this before you can continue',
+					visuallyHiddenText: 'Error'
+				}) }}
+
+			{% else %}
+
+				{{
+					govukButton({
+						html: 'Continue'
+					})
+				}}
+
+			{% endif %}
 		</form>
 	</div>
 </div>

@@ -19,7 +19,23 @@
 
         <div class="govuk-grid-column-two-thirds">
 
-            <form action="rejected.html">
+            <form action="/validate-subset" method="POST">
+
+                {% set hasError = data['subsetError'] == 'true' %}
+                {% if hasError %}
+                    {{
+                        govukErrorSummary({
+                            titleText: 'There is a problem',
+                            errorList: [
+                                {
+                                    text:
+                                        'There cannot be more appeals lodged for infant classes than all classes together',
+                                    href: '#p-lodged-infant-error'
+                                }
+                            ]
+                        })
+                    }}
+                {% endif %}
 
                 <span class="govuk-caption-xl">Primary schools</span>
                 <h1 class="govuk-heading-xl">How many appeals were decided in favour of parents?</h1>
@@ -39,10 +55,17 @@
                     name: 'p-in-favour-infant',
                     value: data['p-in-favour-infant'] if data['p-in-favour-infant'] else '',
                     classes: 'govuk-input--width-5',
+                    type: 'number',
+                    errorMessage: {
+                        text: 'There cannot be more appeals found in favour for infant classes than all classes together'
+                    } if hasError,
                     label: {
                         text: 'From infant classes'
                     }
                 }) }}
+
+
+                <input type="hidden" name="next-page" value="{{ '#root#/primary/check-outcomes.html' if data['from-p-outcome-totals'] == 'true' else '#root#/primary/rejected.html' }}" />
 
 
                 {{ govukButton ({

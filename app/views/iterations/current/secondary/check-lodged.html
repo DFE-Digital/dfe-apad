@@ -1,4 +1,12 @@
-{% extends 'layout.html' %} {% block pageTitle %} Check the total number of
+{% extends 'layout.html' %} 
+
+{% set allClassesQuery = (data['s-lodged-all'] | int) > [data['s-withdrawn-all'], data['s-heard-all']] | stringSum %}
+{% set allClassesError = (data['s-lodged-all'] | int) < [data['s-withdrawn-all'], data['s-heard-all']] | stringSum %}
+
+{% set allClassesFine = not allClassesQuery and not allClassesError %}
+
+
+{% block pageTitle %} Check the total number of
 appeals {% endblock %} {% block beforeContent %}
 
 {{
@@ -12,71 +20,126 @@ appeals {% endblock %} {% block beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form action="in-favour.html">
+		<form action="{{ 'check-outcomes.html' if data['from-s-outcome-totals'] == 'true' else 'in-favour.html' }}">
 			<span class="govuk-caption-xl">Secondary schools</span>
-			<h1 class="govuk-heading-xl">Check the total number of appeals</h1>
+			<h1 class="govuk-heading-xl">
+				Check the appeals that were withdrawn or heard by an appeals panel
+				against the total that were lodged
+			</h1>
 
 			{{ govukSummaryList ({
-                    rows: [
-                        {
-                            key: {
-                                text: 'Total lodged'
-                            },
-                            value: {
-                                text: data['s-lodged-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        href: 'lodged.html?from-p-lodged-totals=true',
-                                        visuallyHiddenText: 'total lodged'
-                                    }
-                                ]
-                            }
+                rows: [
+                    {
+                        key: {
+                            text: 'Withdrawn'
                         },
-                        {
-                            key: {
-                                text: 'Withdrawn'
-                            },
-                            value: {
-                                text: data['s-withdrawn-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        href: 'withdrawn.html?from-p-lodged-totals=true',
-                                        visuallyHiddenText: 'withdrawn'
-                                    }
-                                ]
-                            }
+                        value: {
+                            text: data['s-withdrawn-all']
                         },
-                        {
-                            key: {
-                                text: 'Heard'
-                            },
-                            value: {
-                                text: data['s-heard-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        href: 'heard.html?from-p-lodged-totals=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            }
+                        actions: {
+                            items: [
+                                {
+                                    text: 'Change',
+                                    href: 'withdrawn.html?from-s-lodged-totals=true',
+                                    visuallyHiddenText: 'withdrawn'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        key: {
+                            text: 'Heard'
+                        },
+                        value: {
+                            text: data['s-heard-all']
+                        },
+                        actions: {
+                            items: [
+                                {
+                                    text: 'Change',
+                                    href: 'heard.html?from-s-lodged-totals=true',
+                                    visuallyHiddenText: 'heard'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        key: {
+                            text: 'Total actioned'
+                        },
+                        value: {
+                            text: [data['s-withdrawn-all'], data['s-heard-all']] | stringSum
                         }
                     }
-                }) }}
+                }
+            }) }}
 
-			{{
-				govukButton({
-					html: 'Continue'
-				})
-			}}
+            {{ govukSummaryList ({
+                rows: [
+                    {
+                        key: {
+                            text: 'Total lodged'
+                        },
+                        value: {
+                            text: data['s-lodged-all']
+                        },
+                        actions: {
+                            items: [
+                                {
+                                    text: 'Change',
+                                    href: 'lodged.html?from-s-lodged-totals=true',
+                                    visuallyHiddenText: 'total lodged'
+                                }
+                            ]
+                        }
+                    }
+                }
+            }) }}
+
+            {% if not allClassesFine %}
+
+                {% if allClassesQuery %}
+
+                    {% if not allClassesError and not infantClassesError %}
+
+                        {{ govukTextarea({
+                            id: 's-lodged-query-all',
+                            name: 's-lodged-query-all',
+                            value: data['s-lodged-query-all'] if data['s-lodged-query-all'] else '',
+                            label: {
+                                text: 'Explain why there were ' + (data['s-lodged-all'] | int - [data['s-withdrawn-all'], data['s-heard-all']] | stringSum) + ' unresolved appeals'
+                            }
+                        }) }}
+
+                        {{
+                            govukButton({
+                                html: 'Continue'
+                            })
+                        }}
+
+                    {% endif %}
+
+                {% endif %}
+
+                {% if allClassesError %}
+
+                    {{ govukErrorMessage({
+                        text: 'There cannot be more appeals actioned than the total number lodged, you must fix this before you can continue',
+                        visuallyHiddenText: 'Error'
+                    }) }}
+
+                {% endif %}
+
+            {% else %}
+
+                {{
+                    govukButton({
+                        html: 'Continue'
+                    })
+                }}
+
+            {% endif %}
+
 		</form>
 	</div>
 </div>

@@ -1,5 +1,10 @@
 {% extends 'layout.html' %}
 
+{% set allClassesError = (data['p-heard-all'] | int) != [data['p-in-favour-all'], data['p-rejected-all']] | stringSum %}
+
+{% set infantClassesError = (data['p-heard-infant'] | int) != [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum %}
+
+
 {% block pageTitle %}
     Check the total number of appeal outcomes
 {% endblock %}
@@ -22,29 +27,12 @@
             <form action="../secondary/any-schools.html">
 
                 <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">Check the total number of appeal outcomes</h1>
+                <h1 class="govuk-heading-xl">Check the total number of appeal outcomes against the number of appeals heard</h1>
 
                 <h2 class="govuk-heading-m">All classes</h2>
 
                 {{ govukSummaryList ({
                     rows: [
-                        {
-                            key: {
-                                text: 'Total heard'
-                            },
-                            value: {
-                                text: data['p-heard-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        href: 'heard.html?from-p-outcome-totals=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            }
-                        },
                         {
                             key: {
                                 text: 'In favour of parents'
@@ -78,11 +66,17 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            key: {
+                                text: 'Total outcomes'
+                            },
+                            value: {
+                                text: [data['p-in-favour-all'], data['p-rejected-all']] | stringSum
+                            }
                         }
                     ]
                 }) }}
-
-                <h2 class="govuk-heading-m">Infant classes</h2>
 
                 {{ govukSummaryList ({
                     rows: [
@@ -91,18 +85,34 @@
                                 text: 'Total heard'
                             },
                             value: {
-                                text: data['p-heard-infant']
+                                text: data['p-heard-all']
                             },
                             actions: {
                                 items: [
                                     {
-                                        text: 'Change',
-                                        href: 'heard.html?from-p-outcome-totals=true',
+                                        text: 'Review',
+                                        href: 'check-lodged.html?from-p-outcome-totals=true',
                                         visuallyHiddenText: 'heard'
                                     }
                                 ]
                             }
-                        },
+                        }
+                    ]
+                }) }}
+
+                {% if allClassesError %}
+
+                    {{ govukErrorMessage({
+                        text: 'There cannot be more appeal outcomes than the total number heard, you must fix this before you can continue',
+                        visuallyHiddenText: 'Error'
+                    }) }}
+
+                {% endif %}
+
+                <h2 class="govuk-heading-m">Infant classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
                         {
                             key: {
                                 text: 'In favour of parents'
@@ -136,14 +146,56 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            key: {
+                                text: 'Total outcomes'
+                            },
+                            value: {
+                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum
+                            }
                         }
                     ]
                 }) }}
 
-
-                {{ govukButton ({
-                    html: 'Continue'
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total heard'
+                            },
+                            value: {
+                                text: data['p-heard-infant']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Review',
+                                        href: 'check-lodged.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 }) }}
+
+                {% if infantClassesError %}
+
+                    {{ govukErrorMessage({
+                        text: 'There cannot be more appeal outcomes than the total number heard, you must fix this before you can continue',
+                        visuallyHiddenText: 'Error'
+                    }) }}
+
+                {% endif %}
+
+                {% if not allClassesError and not infantClassesError %}
+
+                    {{ govukButton ({
+                        html: 'Continue'
+                    }) }}
+
+                {% endif %}
 
             </form>
 
