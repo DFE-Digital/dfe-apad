@@ -47,6 +47,22 @@ $('input[type=radio]').on('change', function() {
 	} catch (e) {}
 })
 
+$('input[id$="-all"]').on('input', function() {
+	var labelContent = 'For infant classes only'
+	var numericValue = Number($(this).val())
+	if (numericValue) {
+		if (numericValue <= 1) {
+			labelContent = 'For infant classes only'
+		} else {
+			labelContent =
+				'Of those <b>' +
+				numericValue +
+				'</b> appeals, how many were for infant classes?'
+		}
+	}
+	$('label[for$="-infant"]').html(labelContent)
+})
+
 window.addEventListener('pageshow', event => {
 	const historyTraversal =
 		event.persisted ||
