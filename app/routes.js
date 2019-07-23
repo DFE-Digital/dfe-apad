@@ -50,6 +50,15 @@ router.all('*', (req, res, next) => {
 	next()
 })
 
+router.post('*', function(req, res, next) {
+	console.log(req.body)
+	if (req.body['next-page']) {
+		res.redirect(req.body['next-page'])
+	} else {
+		next()
+	}
+})
+
 router.post('/validate-subset', (req, res) => {
 	const allKey = Object.keys(req.body).filter(key => key.endsWith('-all'))[0]
 	const infantKey = Object.keys(req.body).filter(key =>
@@ -58,7 +67,7 @@ router.post('/validate-subset', (req, res) => {
 	const allValue = req.body[allKey] ? parseFloat(req.body[allKey]) : 0
 	const infantValue = req.body[infantKey] ? parseFloat(req.body[infantKey]) : 0
 	if (allValue >= infantValue) {
-		res.redirect(req.body['next-page'])
+		res.redirect(req.body['success-page'])
 	} else {
 		req.session.data.subsetError = 'true'
 		res.redirect(req.headers.referer)

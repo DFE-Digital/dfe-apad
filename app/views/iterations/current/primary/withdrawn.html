@@ -78,7 +78,7 @@
                     }
                 }) }}
 
-                <input type="hidden" name="next-page" value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/heard.html' }}" />
+                <input type="hidden" name="success-page" value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/heard.html' }}" />
                 
 
                 {{ govukButton ({

@@ -48,6 +48,7 @@
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'contact-details/contact-details.html?from-check=true',
                                         classes: 'govuk-link--no-visited-state',
                                         visuallyHiddenText: 'name'
@@ -66,6 +67,7 @@
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'contact-details/contact-details.html?from-check=true',
                                         classes: 'govuk-link--no-visited-state',
                                         visuallyHiddenText: 'email address'
@@ -84,6 +86,7 @@
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'contact-details/contact-details.html?from-check=true',
                                         classes: 'govuk-link--no-visited-state',
                                         visuallyHiddenText: 'email address'
@@ -100,15 +103,39 @@
                     rows: [
                         {
                             key: {
-                                text: 'Total lodged'
+                                text: 'Does your local authority have any voluntary-controlled or community primary schools?'
                             },
                             value: {
-                                text: data['p-lodged-all']
+                                text: data['any-primary'] | titleCase
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/any-schools.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['p-lodged-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/lodged.html?from-check=true',
                                         visuallyHiddenText: 'total lodged'
                                     }
@@ -120,12 +147,13 @@
                                 text: 'Withdrawn'
                             },
                             value: {
-                                text: data['p-withdrawn-all']
+                                text: data['p-withdrawn-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/withdrawn.html?from-check=true',
                                         visuallyHiddenText: 'withdrawn'
                                     }
@@ -137,12 +165,13 @@
                                 text: 'Heard'
                             },
                             value: {
-                                text: data['p-heard-all']
+                                text: data['p-heard-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/heard.html?from-check=true',
                                         visuallyHiddenText: 'heard'
                                     }
@@ -154,12 +183,13 @@
                                 text: 'Reason why total lodged does not match total number actioned'
                             },
                             value: {
-                                text: data['p-lodged-query-all']
+                                text: data['p-lodged-query-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/check-lodged.html?from-check=true',
                                         visuallyHiddenText: 'heard'
                                     }
@@ -176,12 +206,13 @@
                                 text: 'Found in favour of parents'
                             },
                             value: {
-                                text: data['p-in-favour-all']
+                                text: data['p-in-favour-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/in-favour.html?from-check=true',
                                         visuallyHiddenText: 'total lodged'
                                     }
@@ -193,12 +224,13 @@
                                 text: 'Rejected'
                             },
                             value: {
-                                text: data['p-rejected-all']
+                                text: data['p-rejected-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/rejected.html?from-check=true',
                                         visuallyHiddenText: 'withdrawn'
                                     }
@@ -217,12 +249,13 @@
                                 text: 'Total lodged'
                             },
                             value: {
-                                text: data['p-lodged-infant']
+                                text: data['p-lodged-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/lodged.html?from-check=true',
                                         visuallyHiddenText: 'total lodged'
                                     }
@@ -234,12 +267,13 @@
                                 text: 'Withdrawn'
                             },
                             value: {
-                                text: data['p-withdrawn-infant']
+                                text: data['p-withdrawn-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/withdrawn.html?from-check=true',
                                         visuallyHiddenText: 'withdrawn'
                                     }
@@ -251,12 +285,13 @@
                                 text: 'Heard'
                             },
                             value: {
-                                text: data['p-heard-infant']
+                                text: data['p-heard-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/heard.html?from-check=true',
                                         visuallyHiddenText: 'heard'
                                     }
@@ -268,12 +303,13 @@
                                 text: 'Reason why total lodged does not match total number actioned'
                             },
                             value: {
-                                text: data['p-lodged-query-infant']
+                                text: data['p-lodged-query-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/check-lodged.html?from-check=true',
                                         visuallyHiddenText: 'heard'
                                     }
@@ -290,12 +326,13 @@
                                 text: 'Found in favour of parents'
                             },
                             value: {
-                                text: data['p-in-favour-infant']
+                                text: data['p-in-favour-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/in-favour.html?from-check=true',
                                         visuallyHiddenText: 'total lodged'
                                     }
@@ -307,12 +344,13 @@
                                 text: 'Rejected'
                             },
                             value: {
-                                text: data['p-rejected-infant']
+                                text: data['p-rejected-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'primary/rejected.html?from-check=true',
                                         visuallyHiddenText: 'withdrawn'
                                     }
@@ -329,15 +367,39 @@
                     rows: [
                         {
                             key: {
-                                text: 'Total lodged'
+                                text: 'Does your local authority have any voluntary-controlled or community secondary schools?'
                             },
                             value: {
-                                text: data['s-lodged-all']
+                                text: data['any-secondary'] | titleCase
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/any-schools.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['s-lodged-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'secondary/lodged.html?from-check=true',
                                         visuallyHiddenText: 'total lodged'
                                     }
@@ -349,12 +411,13 @@
                                 text: 'Withdrawn'
                             },
                             value: {
-                                text: data['s-withdrawn-all']
+                                text: data['s-withdrawn-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'secondary/withdrawn.html?from-check=true',
                                         visuallyHiddenText: 'withdrawn'
                                     }
@@ -366,12 +429,13 @@
                                 text: 'Heard'
                             },
                             value: {
-                                text: data['s-heard-all']
+                                text: data['s-heard-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'secondary/heard.html?from-check=true',
                                         visuallyHiddenText: 'heard'
                                     }
@@ -383,12 +447,13 @@
                                 text: 'Reason why total lodged does not match total number actioned'
                             },
                             value: {
-                                text: data['s-lodged-query-all']
+                                text: data['s-lodged-query-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'secondary/check-lodged.html?from-check=true',
                                         visuallyHiddenText: 'heard'
                                     }
@@ -405,12 +470,13 @@
                                 text: 'Found in favour of parents'
                             },
                             value: {
-                                text: data['s-in-favour-all']
+                                text: data['s-in-favour-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'secondary/in-favour.html?from-check=true',
                                         visuallyHiddenText: 'total lodged'
                                     }
@@ -422,12 +488,13 @@
                                 text: 'Rejected'
                             },
                             value: {
-                                text: data['s-rejected-all']
+                                text: data['s-rejected-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'secondary/rejected.html?from-check=true',
                                         visuallyHiddenText: 'withdrawn'
                                     }
@@ -452,6 +519,7 @@
                                 items: [
                                     {
                                         text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
                                         href: 'completion-time.html?from-check=true',
                                         visuallyHiddenText: 'completion-time'
                                     }

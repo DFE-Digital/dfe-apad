@@ -28,7 +28,7 @@
 
         <div class="govuk-grid-column-two-thirds">
 
-            <form action="lodged.html">
+            <form method="post">
 
                 <span class="govuk-caption-xl">Primary schools</span>
                 <h1 class="govuk-heading-xl">Does your local authority have any voluntary-controlled or community primary schools?</h1>
@@ -69,5 +69,14 @@
         </div>
 
 </div>
+
+<script>
+
+    var nextPageRoutes = {
+        yes: '{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
+        no: '{{ "../check-your-answers.html" if data["from-check"] == "true" else "../secondary/any-schools.html" }}'
+    }
+
+</script>
 
 {% endblock %}
