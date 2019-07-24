@@ -1,6 +1,5 @@
-{% extends 'layout.html' %} {% block pageTitle %} How many of these lodged
-appeals were withdrawn before reaching an appeals panel? {% endblock %} {% block
-beforeContent %}
+{% extends 'layout.html' %} {% block pageTitle %} How many appeals were decided
+in favour of parents? {% endblock %} {% block beforeContent %}
 
 {{
 	govukPhaseBanner({
@@ -22,23 +21,16 @@ beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form action="{{ 'check-lodged.html' if data['from-s-lodged-totals'] == 'true' else 'heard.html' }}">
+		<form action="{{ 'check-outcomes.html' if data['from-s-outcome-totals'] == 'true' else 'rejected.html' }}">
 			<span class="govuk-caption-xl">Secondary schools</span>
 			<h1 class="govuk-heading-xl">
-				How many of the appeals lodged were withdrawn before reaching an appeals panel
+				How many appeals were decided in favour of parents?
 			</h1>
 
-			{{
-				govukInsetText({
-					text:
-						'Include appeals that were no longer needed because a school place was offered before a hearing.'
-				})
-			}}
-
 			{{ govukInput ({
-                    id: 's-withdrawn-all',
-                    name: 's-withdrawn-all',
-                    value: data['s-withdrawn-all'] if data['s-withdrawn-all'] else '',
+                    id: 's-in-favour-all',
+                    name: 's-in-favour-all',
+                    value: data['s-in-favour-all'] if data['s-in-favour-all'] else '',
                     classes: 'govuk-input--width-5',
                     label: {
                         text: 'For all secondary school classes'

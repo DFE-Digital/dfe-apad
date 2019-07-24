@@ -1,0 +1,90 @@
+{% extends 'layout.html' %} {% block pageTitle %} How many appeals were lodged
+by parents for admissions to primary schools? {% endblock %} {% block
+beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+        <form action="/validate-subset" method="POST">
+
+            {% set hasError = data['subsetError'] == 'true' %}
+            {% if hasError %}
+                {{
+                    govukErrorSummary({
+                        titleText: 'There is a problem',
+                        errorList: [
+                            {
+                                text:
+                                    'There cannot be more appeals lodged for infant classes than all classes combined',
+                                href: '#p-lodged-infant-error'
+                            }
+                        ]
+                    })
+                }}
+            {% endif%}
+
+			<span class="govuk-caption-xl">Primary schools</span>
+			<h1 class="govuk-heading-xl">
+				How many appeals were lodged by parents for admissions to primary
+				schools?
+			</h1>
+
+			{{
+				govukInsetText({
+					text: 'Only tell us about schools which will be voluntary controlled or community schools on 16 January 2020.'
+				})
+			}}
+
+			{{ govukInput ({
+                    id: 'p-lodged-all',
+                    name: 'p-lodged-all',
+                    value: data['p-lodged-all'] if data['p-lodged-all'] else '',
+                    classes: 'govuk-input--width-5',
+                    label: {
+                        text: 'For all primary school classes'
+                    }
+                }) }}
+
+			{{ govukInput ({
+                    id: 'p-lodged-infant',
+                    name: 'p-lodged-infant',
+                    value: data['p-lodged-infant'] if data['p-lodged-infant'] else '',
+                    classes: 'govuk-input--width-5',
+                    type: 'number',
+                    errorMessage: {
+                        text: 'There cannot be more appeals lodged for infant classes than all classes combined'
+                    } if hasError,
+                    label: {
+                        text: 'For infant classes only'
+                    }
+                }) }}
+
+			<input type="hidden" name="success-page" value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/withdrawn.html' }}" />
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

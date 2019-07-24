@@ -1,4 +1,5 @@
-{% extends 'layout.html' %} {% block pageTitle %} You have told us that your local authority has no voluntary-controlled or community primary or secondary schools, is this correct? {% endblock %} {% block
+{% extends 'layout.html' %} {% block pageTitle %} Does your local authority have
+any voluntary-controlled or community primary schools? {% endblock %} {% block
 beforeContent %}
 
 {{
@@ -22,27 +23,28 @@ beforeContent %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
+			<span class="govuk-caption-xl">Secondary schools</span>
 			<h1 class="govuk-heading-xl">
-				You have told us that your local authority has no voluntary-controlled or community
-				primary or secondary schools, is this correct?
+				Does your local authority have any voluntary-controlled or community
+				secondary schools?
 			</h1>
 
 			{{
 				govukInsetText({
 					text:
-						'This includes any voluntary-controlled or community middle schools deemed as primary or secondary schools.'
+						'This includes any voluntary-controlled or community middle schools deemed as secondary schools.'
 				})
 			}}
 
 			{{
 				govukRadios({
 					classes: 'govuk-radios--inline',
-					idPrefix: 'any-schools',
-					name: 'any-schools',
+					idPrefix: 'any-secondary',
+					name: 'any-secondary',
 					fieldset: {
 						legend: {
 							text:
-								'You have told us that your local authority has no voluntary-controlled or community primary or secondary schools, is this correct?',
+								'Does your local authority have any voluntary-controlled or community secondary schools?',
 							isPageHeading: true,
 							classes: 'govuk-visually-hidden'
 						}
@@ -72,8 +74,8 @@ beforeContent %}
 <script>
 
     var nextPageRoutes = {
-        yes: 'completion-time.html',
-        no: 'primary/any-schools.html'
+        yes: '{{ "../check-your-answers.html" if data["any-secondary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
+        no: '{{ "../no-schools.html" if data["any-primary"] == "no" else ("../check-your-answers.html" if data["from-check"] == "true" else "../completion-time.html") }}'
     }
 
 </script>

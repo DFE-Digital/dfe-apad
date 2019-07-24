@@ -80,7 +80,7 @@
                         },
                         {
                             key: {
-                                text: 'Total outcomes'
+                                text: 'Total appeal outcomes'
                             },
                             value: {
                                 text: [data['p-in-favour-all'], data['p-rejected-all']] | stringSum
@@ -93,7 +93,7 @@
                     rows: [
                         {
                             key: {
-                                text: 'Total heard'
+                                text: 'Appeals heard'
                             },
                             value: {
                                 text: data['p-heard-all']
@@ -115,7 +115,7 @@
                 {% if allClassesError %}
 
                     {{ govukErrorMessage({
-                        text: 'There cannot be more appeal outcomes than the total number heard, you must fix this before you can continue',
+                        text: 'There must be the same total number of appeal outcomes as the number heard, you must fix this before you can continue',
                         visuallyHiddenText: 'Error'
                     }) }}
 
@@ -163,7 +163,7 @@
                         },
                         {
                             key: {
-                                text: 'Total outcomes'
+                                text: 'Total appeal outcomes'
                             },
                             value: {
                                 text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum
@@ -176,7 +176,7 @@
                     rows: [
                         {
                             key: {
-                                text: 'Total heard'
+                                text: 'Appeals heard'
                             },
                             value: {
                                 text: data['p-heard-infant']
@@ -198,7 +198,7 @@
                 {% if infantClassesError %}
 
                     {{ govukErrorMessage({
-                        text: 'There cannot be more appeal outcomes than the total number heard, you must fix this before you can continue',
+                        text: 'There must be the same total number of appeal outcomes as the number heard, you must fix this before you can continue',
                         visuallyHiddenText: 'Error'
                     }) }}
 

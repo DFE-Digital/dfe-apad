@@ -98,7 +98,7 @@
                     rows: [
                         {
                             key: {
-                                text: 'Appeals lodged'
+                                text: 'Total lodged'
                             },
                             value: {
                                 text: data['p-lodged-all']
@@ -132,12 +132,6 @@
                                 }
                             }) }}
 
-                        {% else %}
-
-                            <p>
-                                There are {{ (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum) }} unresolved appeals for all primary school classes
-                            </p>
-
                         {% endif %}
 
                     {% endif %}
@@ -145,7 +139,7 @@
                     {% if allClassesError %}
 
                         {{ govukErrorMessage({
-                            text: 'There cannot be more appeals actioned than the number lodged, you must fix this before you can continue',
+                            text: 'There cannot be more appeals actioned than the total number lodged, you must fix this before you can continue',
                             visuallyHiddenText: 'Error'
                         }) }}
 
@@ -208,7 +202,7 @@
                     rows: [
                         {
                             key: {
-                                text: 'Appeals lodged'
+                                text: 'Total lodged'
                             },
                             value: {
                                 text: data['p-lodged-infant']
@@ -242,10 +236,6 @@
                                 }
                             }) }}
 
-                        {% else %}
-
-                            <p>There are {{ (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum) }} unresolved appeals for infant classes</p>
-
                         {% endif %}
 
                     {% endif %}
@@ -253,7 +243,7 @@
                     {% if infantClassesError %}
 
                         {{ govukErrorMessage({
-                            text: 'There cannot be more appeals actioned than the number lodged, you must fix this before you can continue',
+                            text: 'There cannot be more appeals actioned than the total number lodged, you must fix this before you can continue',
                             visuallyHiddenText: 'Error'
                         }) }}
 

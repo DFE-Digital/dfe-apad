@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block pageTitle %}
-    How many of these lodged appeals were withdrawn before reaching an appeals panel?
+    How many appeals were rejected?
 {% endblock %}
 
 {% block beforeContent %}
@@ -38,8 +38,8 @@
                             errorList: [
                                 {
                                     text:
-                                        'There cannot be more withdrawn appeals for infant classes than all classes combined',
-                                    href: '#p-withdrawn-infant-error'
+                                        'There cannot be more appeals rejected for infant classes than all classes combined',
+                                    href: '#p-lodged-infant-error'
                                 }
                             ]
                         })
@@ -47,39 +47,43 @@
                 {% endif%}
 
                 <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">How many of the appeals lodged were withdrawn before reaching an appeals panel?</h1>
+                <h1 class="govuk-heading-xl">How many appeals were rejected?</h1>
 
-                {{ govukInsetText ({
-                    text: 'Include appeals that were no longer needed because a school place was offered before a hearing.'
-                }) }}
+                {% set allRefNumber = (data['p-lodged-all'] | int - data['p-withdrawn-all'] | int - data['p-in-favour-all'] | int) %}
+                {% set infantRefNumber = (data['p-lodged-infant'] | int - data['p-withdrawn-infant'] | int - data['p-in-favour-infant'] | int) %}
 
                 {{ govukInput ({
-                    id: 'p-withdrawn-all',
-                    name: 'p-withdrawn-all',
-                    value: data['p-withdrawn-all'] if data['p-withdrawn-all'] else '',
+                    id: 'p-rejected-all',
+                    name: 'p-rejected-all',
+                    value: data['p-rejected-all'] if data['p-rejected-all'] else '',
                     classes: 'govuk-input--width-5',
-                    type: 'number',
+                    hint: {
+                        text: 'Based on what you have told us, it appears there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all primary school classes that have not been withdrawn or decided in the favour of parents'
+                    } if allRefNumber > 1,
                     label: {
                         text: 'For all primary school classes'
                     }
                 }) }}
 
                 {{ govukInput ({
-                    id: 'p-withdrawn-infant',
-                    name: 'p-withdrawn-infant',
-                    value: data['p-withdrawn-infant'] if data['p-withdrawn-infant'] else '',
+                    id: 'p-rejected-infant',
+                    name: 'p-rejected-infant',
+                    value: data['p-rejected-infant'] if data['p-rejected-infant'] else '',
                     classes: 'govuk-input--width-5',
+                    hint: {
+                        text: 'Based on what you have told us, it appears there were ' + infantRefNumber | friendlyNumber + ' appeals lodged for infant classes that have not been withdrawn or decided in the favour of parents'
+                    } if infantRefNumber > 1,
                     type: 'number',
                     errorMessage: {
-                        text: 'There cannot be more withdrawn appeals for infant classes than all classes combined'
+                        text: 'There cannot be more appeals rejected for infant classes than all classes combined'
                     } if hasError,
                     label: {
                         text: 'For infant classes only'
                     }
                 }) }}
 
-                <input type="hidden" name="success-page" value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/heard.html' }}" />
-                
+                <input type="hidden" name="success-page" value="#root#/primary/check-outcomes.html">
+
 
                 {{ govukButton ({
                     html: 'Continue'

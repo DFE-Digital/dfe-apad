@@ -1,0 +1,40 @@
+{% extends 'layout.html' %} {% block pageTitle %} Confirmation {% endblock %} {%
+block beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		{{
+			govukPanel({
+				titleText: 'Data collection sent'
+			})
+		}}
+
+		<h2 class="govuk-heading-m">What happens next</h2>
+
+		<p class="govuk-body">
+			The Department for Education will check the details you have given.
+		</p>
+		<p class="govuk-body">
+			They will contact you by phone or email before 9 November 2019 if they
+			need to ask for more information.
+		</p>
+
+		<p class="govuk-body">
+			<a href="#" class="govuk-link">What did you think of this service?</a>
+			(takes 30 seconds)
+		</p>
+	</div>
+</div>
+
+{% endblock %}

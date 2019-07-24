@@ -1,0 +1,550 @@
+{% extends 'layout.html' %}
+
+{% block pageTitle %}
+    Check your answers before sending this data collection
+{% endblock %}
+
+{% block beforeContent %}
+{{
+        govukPhaseBanner({
+            tag: {
+                text: 'prototype'
+            },
+            html: 'This service is in development. Do not submit any real data.'
+        })
+    }}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+    
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <form action="confirmation.html">
+
+                <h1 class="govuk-heading-xl">Check your answers before sending this data collection</h1>
+
+                <h2 class="govuk-heading-m">Contact details</h2>
+                
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Name'
+                            },
+                            value: {
+                                text: data['first-name'] + ' ' + data['last-name']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'contact-details/contact-details.html?from-check=true',
+                                        classes: 'govuk-link--no-visited-state',
+                                        visuallyHiddenText: 'name'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Email address'
+                            },
+                            value: {
+                                text: data['email-address']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'contact-details/contact-details.html?from-check=true',
+                                        classes: 'govuk-link--no-visited-state',
+                                        visuallyHiddenText: 'email address'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Phone number'
+                            },
+                            value: {
+                                text: data['phone-number']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'contact-details/contact-details.html?from-check=true',
+                                        classes: 'govuk-link--no-visited-state',
+                                        visuallyHiddenText: 'email address'
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }) }}
+
+                <h2 class="govuk-heading-m">Admission appeals for primary schools: all classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Does your local authority have any voluntary-controlled or community primary schools?'
+                            },
+                            value: {
+                                text: data['any-primary'] | titleCase
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/any-schools.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['p-lodged-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/lodged.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['p-withdrawn-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/withdrawn.html?from-check=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Heard'
+                            },
+                            value: {
+                                text: data['p-heard-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/heard.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Reason why total lodged does not match total number actioned'
+                            },
+                            value: {
+                                text: data['p-lodged-query-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/check-lodged.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        } if ((data['p-lodged-all'] | int) > [data['p-withdrawn-all'], data['p-heard-all']] | stringSum)
+                    }
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Found in favour of parents'
+                            },
+                            value: {
+                                text: data['p-in-favour-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/in-favour.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Rejected'
+                            },
+                            value: {
+                                text: data['p-rejected-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/rejected.html?from-check=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+                <h2 class="govuk-heading-m">Admission appeals for primary schools: infant classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['p-lodged-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/lodged.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['p-withdrawn-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/withdrawn.html?from-check=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Heard'
+                            },
+                            value: {
+                                text: data['p-heard-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/heard.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Reason why total lodged does not match total number actioned'
+                            },
+                            value: {
+                                text: data['p-lodged-query-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/check-lodged.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        } if ((data['p-lodged-infant'] | int) > [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum)
+                    }
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Found in favour of parents'
+                            },
+                            value: {
+                                text: data['p-in-favour-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/in-favour.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Rejected'
+                            },
+                            value: {
+                                text: data['p-rejected-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/rejected.html?from-check=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+
+                <h2 class="govuk-heading-m">Admission appeals for secondary schools</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Does your local authority have any voluntary-controlled or community secondary schools?'
+                            },
+                            value: {
+                                text: data['any-secondary'] | titleCase
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/any-schools.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Total lodged'
+                            },
+                            value: {
+                                text: data['s-lodged-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/lodged.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['s-withdrawn-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/withdrawn.html?from-check=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Heard'
+                            },
+                            value: {
+                                text: data['s-heard-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/heard.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Reason why total lodged does not match total number actioned'
+                            },
+                            value: {
+                                text: data['s-lodged-query-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/check-lodged.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        } if ((data['s-lodged-all'] | int) > [data['s-withdrawn-all'], data['s-heard-all']] | stringSum)
+                    }
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Found in favour of parents'
+                            },
+                            value: {
+                                text: data['s-in-favour-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/in-favour.html?from-check=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Rejected'
+                            },
+                            value: {
+                                text: data['s-rejected-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/rejected.html?from-check=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+                <h2 class="govuk-heading-m">Completion time</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'To the nearest whole hour'
+                            },
+                            value: {
+                                text: data['completion-time']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'completion-time.html?from-check=true',
+                                        visuallyHiddenText: 'completion-time'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+                <h2 class="govuk-heading-m">Now send the data collection</h2>
+
+                <p class="govuk-body">By submitting this collection you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+
+                <form action="confirmation.html" method="post" novalidate>
+
+                <input type="hidden" name="answers-checked" value="true">
+
+                {{ govukButton({
+                    text: "Accept and send"
+                }) }}
+
+            </form>
+
+        </div>
+
+</div>
+
+{% endblock %}

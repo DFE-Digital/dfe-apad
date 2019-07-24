@@ -47,20 +47,44 @@ $('input[type=radio]').on('change', function() {
 	} catch (e) {}
 })
 
-$('input[id$="-all"]').on('input', function() {
-	var labelContent = 'For infant classes only'
-	var numericValue = Number($(this).val())
-	if (numericValue) {
-		if (numericValue <= 1) {
-			labelContent = 'For infant classes only'
-		} else {
-			labelContent =
-				'Of those <b>' +
-				numericValue +
-				'</b> appeals, how many were for infant classes?'
-		}
+function separateThousandsWithComma(input) {
+	let amount = Math.round(Number(input) * 100) / 100
+	if (amount % 1 !== 0) {
+		amount = amount.toFixed(2)
 	}
-	$('label[for$="-infant"]').html(labelContent)
+	return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
+function toFriendlyNumber(input) {
+	if (input == 0 || input == '0' || !input) {
+		return 'None'
+	} else {
+		return separateThousandsWithComma(input)
+	}
+}
+
+function setLabels() {
+	if ($('input[id$="-all"]').length != 0) {
+		var labelContent = 'For infant classes only'
+		var numericValue = Number($('input[id$="-all"]').val())
+		if (numericValue) {
+			if (numericValue <= 1) {
+				labelContent = 'For infant classes only'
+			} else {
+				labelContent =
+					'Of those <b>' +
+					toFriendlyNumber(numericValue) +
+					'</b> appeals, how many were for infant classes?'
+			}
+		}
+		$('label[for$="-infant"]').html(labelContent)
+	}
+}
+
+setLabels()
+
+$('input[id$="-all"]').on('input', function() {
+	setLabels()
 })
 
 window.addEventListener('pageshow', event => {
