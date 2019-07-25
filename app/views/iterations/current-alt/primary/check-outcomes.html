@@ -63,7 +63,7 @@
                                     {
                                         text: 'Change',
                                         classes: 'govuk-link--no-visited-state',
-                                        href: 'lodged.html?from-p-lodged-totals=true',
+                                        href: 'lodged.html?from-p-outcome-totals=true',
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
@@ -86,7 +86,7 @@
                                     {
                                         text: 'Change',
                                         classes: 'govuk-link--no-visited-state',
-                                        href: 'withdrawn.html?from-p-lodged-totals=true',
+                                        href: 'withdrawn.html?from-p-outcome-totals=true',
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
@@ -139,13 +139,13 @@
                 {% if not allClassesFine %}
 
                     {% if allClassesQuery %}
+                    
+                        {{ govukWarningText ({
+                            text: 'Based on what you have told us it appears there were ' + (data['p-lodged-all'] | int - [data['p-withdrawn-all'], allHeardTotal] | stringSum) + ' appeals for all primary school classes that were neither withdrawn or decided on by an appeals panel',
+                            iconFallbackText: 'Warning'
+                        }) }}
 
                         {% if not allClassesError and not infantClassesError %}
-
-                            {{ govukWarningText ({
-                                text: 'Based on what you have told us it appears there were ' + (data['p-lodged-all'] | int - [data['p-withdrawn-all'], allHeardTotal] | stringSum) + ' appeals for all primary school classes that were neither withdrawn or decided on by an appeals panel',
-                                iconFallbackText: 'Warning'
-                            }) }}
 
                             {{ govukTextarea({
                                 id: 'p-lodged-query-all',
@@ -187,7 +187,7 @@
                                     {
                                         text: 'Change',
                                         classes: 'govuk-link--no-visited-state',
-                                        href: 'lodged.html?from-p-lodged-totals=true',
+                                        href: 'lodged.html?from-p-outcome-totals=true',
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
@@ -210,7 +210,7 @@
                                     {
                                         text: 'Change',
                                         classes: 'govuk-link--no-visited-state',
-                                        href: 'withdrawn.html?from-p-lodged-totals=true',
+                                        href: 'withdrawn.html?from-p-outcome-totals=true',
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
@@ -264,12 +264,13 @@
 
                     {% if infantClassesQuery %}
 
+                        {{ govukWarningText ({
+                            text: 'Based on what you have told us it appears there were ' + (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], infantHeardTotal] | stringSum) + ' appeals for infant classes that were neither withdrawn or decided on by an appeals panel',
+                            iconFallbackText: 'Warning'
+                        }) }}
+
                         {% if not allClassesError and not infantClassesError %}
 
-                            {{ govukWarningText ({
-                                text: 'Based on what you have told us it appears there were ' + (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], infantHeardTotal] | stringSum) + ' appeals for infant classes that were neither withdrawn or decided on by an appeals panel',
-                                iconFallbackText: 'Warning'
-                            }) }}
 
                             {{ govukTextarea({
                                 id: 'p-lodged-query-infant',
