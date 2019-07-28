@@ -47,6 +47,8 @@ function setUrlParameter(url, key, value) {
 
 router.all('*', (req, res, next) => {
 	req.session.data.subsetError = 'false'
+	req.session.data.allQueryError = 'false'
+	req.session.data.infantQueryError = 'false'
 	next()
 })
 
@@ -71,6 +73,28 @@ router.post('/validate-subset', (req, res) => {
 	} else {
 		req.session.data.subsetError = 'true'
 		res.redirect(req.headers.referer)
+	}
+})
+
+router.post('/validate-queries', (req, res) => {
+	const allKey = Object.keys(req.body).filter(key =>
+		key.endsWith('-query-all')
+	)[0]
+	const infantKey = Object.keys(req.body).filter(key =>
+		key.endsWith('-query-infant')
+	)[0]
+	var hasAllError = false
+	var hasInfantError = false
+	if (allKey || infantKey) {
+		hasAllError = req.body[allKey] == '' || req.body[allKey] == null
+		hasInfantError = req.body[allKey] == '' || req.body[allKey] == null
+	}
+	if (hasAllError || hasInfantError) {
+		req.session.data.allQueryError = 'true'
+		req.session.data.infantQueryError = 'true'
+		res.redirect(req.headers.referer)
+	} else {
+		res.redirect(req.body['success-page'])
 	}
 })
 

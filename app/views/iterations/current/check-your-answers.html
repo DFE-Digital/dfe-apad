@@ -140,7 +140,7 @@
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -158,7 +158,7 @@
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -176,14 +176,14 @@
                                         visuallyHiddenText: 'heard'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
                                 text: 'Reason why total lodged does not match total number actioned'
                             },
                             value: {
-                                text: data['p-lodged-query-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                                text: data['p-lodged-query-all'] if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
@@ -194,7 +194,7 @@
                                         visuallyHiddenText: 'heard'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         } if ((data['p-lodged-all'] | int) > [data['p-withdrawn-all'], data['p-heard-all']] | stringSum)
                     }
                 }) }}
@@ -217,7 +217,7 @@
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -235,7 +235,7 @@
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         }
                     ]
                 }) }}
@@ -260,7 +260,7 @@
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -278,7 +278,7 @@
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -296,14 +296,14 @@
                                         visuallyHiddenText: 'heard'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
                                 text: 'Reason why total lodged does not match total number actioned'
                             },
                             value: {
-                                text: data['p-lodged-query-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                                text: data['p-lodged-query-infant'] if data['any-primary'] == 'yes' else 'Not applicable'
                             },
                             actions: {
                                 items: [
@@ -314,7 +314,7 @@
                                         visuallyHiddenText: 'heard'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         } if ((data['p-lodged-infant'] | int) > [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum)
                     }
                 }) }}
@@ -337,7 +337,7 @@
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -355,7 +355,7 @@
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         }
                     ]
                 }) }}
@@ -404,7 +404,7 @@
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -422,7 +422,7 @@
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -440,7 +440,7 @@
                                         visuallyHiddenText: 'heard'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -458,7 +458,7 @@
                                         visuallyHiddenText: 'heard'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         } if ((data['s-lodged-all'] | int) > [data['s-withdrawn-all'], data['s-heard-all']] | stringSum)
                     }
                 }) }}
@@ -481,7 +481,7 @@
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         },
                         {
                             key: {
@@ -499,7 +499,7 @@
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
-                            }
+                            } if data['any-primary'] == 'yes'
                         }
                     ]
                 }) }}

@@ -38,11 +38,16 @@ beforeContent %}
 				})
 			}}
 
+			{% set allRefNumber = data['p-lodged-all'] | int %}
+
 			{{ govukInput ({
                     id: 's-withdrawn-all',
                     name: 's-withdrawn-all',
                     value: data['s-withdrawn-all'] if data['s-withdrawn-all'] else '',
-                    classes: 'govuk-input--width-5',
+					classes: 'govuk-input--width-5',
+					hint: {
+                        text: 'You have told us there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all secondary school classes'
+                    } if allRefNumber > 1,
                     label: {
                         text: 'For all secondary school classes'
                     }
