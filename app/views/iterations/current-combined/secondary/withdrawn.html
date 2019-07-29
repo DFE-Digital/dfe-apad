@@ -1,0 +1,65 @@
+{% extends 'layout.html' %} {% block pageTitle %} How many of these lodged
+appeals were withdrawn before reaching an appeals panel? {% endblock %} {% block
+beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form
+			action="{{ 'check-outcomes.html' if data['from-s-outcome-totals'] == 'true' else 'in-favour.html' }}"
+		>
+			<span class="govuk-caption-xl">Secondary schools</span>
+			<h1 class="govuk-heading-xl">
+				How many of the appeals lodged were withdrawn before reaching an appeals
+				panel
+			</h1>
+
+			{{
+				govukInsetText({
+					text:
+						'Include appeals that were no longer needed because a school place was offered before a hearing.'
+				})
+			}}
+
+			{% set allRefNumber = data['p-lodged-all'] | int %}
+
+			{{ govukInput ({
+                    id: 's-withdrawn-all',
+                    name: 's-withdrawn-all',
+                    value: data['s-withdrawn-all'] if data['s-withdrawn-all'] else '',
+					classes: 'govuk-input--width-5',
+					hint: {
+                        text: 'You have told us there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all secondary school classes'
+                    } if false,
+                    label: {
+                        text: 'For all secondary school classes'
+                    }
+                }) }}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

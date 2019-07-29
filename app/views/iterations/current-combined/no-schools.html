@@ -1,0 +1,81 @@
+{% extends 'layout.html' %} {% block pageTitle %} You have told us that your local authority has no voluntary-controlled or community primary or secondary schools, is this correct? {% endblock %} {% block
+beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<h1 class="govuk-heading-xl">
+				You have told us that your local authority has no voluntary-controlled or community
+				primary or secondary schools, is this correct?
+			</h1>
+
+			{{
+				govukInsetText({
+					text:
+						'This includes any voluntary-controlled or community middle schools deemed as primary or secondary schools.'
+				})
+			}}
+
+			{{
+				govukRadios({
+					classes: 'govuk-radios--inline',
+					idPrefix: 'any-schools',
+					name: 'any-schools',
+					fieldset: {
+						legend: {
+							text:
+								'You have told us that your local authority has no voluntary-controlled or community primary or secondary schools, is this correct?',
+							isPageHeading: true,
+							classes: 'govuk-visually-hidden'
+						}
+					},
+					items: [
+						{
+							text: 'Yes',
+							value: 'yes'
+						},
+						{
+							text: 'No',
+							value: 'no'
+						}
+					]
+				})
+			}}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+<script>
+
+    var nextPageRoutes = {
+        yes: 'completion-time.html',
+        no: 'primary/any-schools.html'
+    }
+
+</script>
+
+{% endblock %}

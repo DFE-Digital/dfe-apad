@@ -85,13 +85,15 @@ router.post('/validate-queries', (req, res) => {
 	)[0]
 	var hasAllError = false
 	var hasInfantError = false
-	if (allKey || infantKey) {
+	if (allKey) {
 		hasAllError = req.body[allKey] == '' || req.body[allKey] == null
-		hasInfantError = req.body[allKey] == '' || req.body[allKey] == null
+	}
+	if (infantKey) {
+		hasInfantError = req.body[infantKey] == '' || req.body[infantKey] == null
 	}
 	if (hasAllError || hasInfantError) {
-		req.session.data.allQueryError = 'true'
-		req.session.data.infantQueryError = 'true'
+		req.session.data.allQueryError = hasAllError ? 'true' : 'false'
+		req.session.data.infantQueryError = hasInfantError ? 'true' : 'false'
 		res.redirect(req.headers.referer)
 	} else {
 		res.redirect(req.body['success-page'])

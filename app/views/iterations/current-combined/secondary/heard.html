@@ -1,0 +1,49 @@
+{% extends 'layout.html' %} {% block pageTitle %} How many of these lodged
+appeals were heard by an appeals panel? {% endblock %} {% block beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="check-lodged.html">
+			<span class="govuk-caption-xl">Secondary schools</span>
+			<h1 class="govuk-heading-xl">
+				How many of the lodged appeals were heard by an appeals panel?
+			</h1>
+
+			{{ govukInput ({
+                    id: 's-heard-all',
+                    name: 's-heard-all',
+                    value: data['s-heard-all'] if data['s-heard-all'] else '',
+                    classes: 'govuk-input--width-5',
+                    label: {
+                        text: 'For all secondary school classes'
+                    }
+                }) }}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

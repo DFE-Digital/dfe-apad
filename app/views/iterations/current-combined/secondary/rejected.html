@@ -1,0 +1,53 @@
+{% extends 'layout.html' %} {% block pageTitle %} How many appeals were
+rejected? {% endblock %} {% block beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="check-outcomes.html">
+			<span class="govuk-caption-xl">Secondary schools</span>
+			<h1 class="govuk-heading-xl">How many appeals were rejected?</h1>
+
+			{% set allRefNumber = (data['p-lodged-all'] | int -
+			data['p-withdrawn-all'] | int - data['p-in-favour-all'] | int) %}
+
+			{{ govukInput ({
+                    id: 's-rejected-all',
+                    name: 's-rejected-all',
+                    value: data['s-rejected-all'] if data['s-rejected-all'] else '',
+					classes: 'govuk-input--width-5',
+					hint: {
+                        text: 'Based on what you have told us, it appears there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all secondary school classes that have not been withdrawn or decided in the favour of parents'
+                    } if false,
+                    label: {
+                        text: 'For all secondary school classes'
+                    }
+                }) }}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

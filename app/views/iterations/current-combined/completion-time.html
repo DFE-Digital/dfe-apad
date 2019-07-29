@@ -1,0 +1,56 @@
+{% extends 'layout.html' %} {% block pageTitle %} How long did it take to
+complete this data collection? {% endblock %} {% block beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="check-your-answers.html">
+			<h1 class="govuk-heading-xl">
+				How long did this data collection take to complete?
+			</h1>
+
+			{{
+				govukInsetText({
+					text:
+						'Include the time it took to gather the required information.'
+				})
+			}}
+
+			{{ govukInput ({
+                    id: 'completion-time',
+                    name: 'completion-time',
+                    value: data['completion-time'] if data['completion-time'] else '',
+                    classes: 'govuk-input--width-5',
+                    type: 'number',
+                    label: {
+                        text: 'To the nearest whole hour'
+                    }
+                }) }}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}
