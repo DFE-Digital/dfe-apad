@@ -126,7 +126,7 @@
                     rows: [
                         {
                             key: {
-                                text: 'Total lodged'
+                                text: 'Appeals lodged'
                             },
                             value: {
                                 text: data['p-lodged-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
@@ -159,46 +159,10 @@
                                     }
                                 ]
                             } if data['any-primary'] == 'yes'
-                        },
-                        {
-                            key: {
-                                text: 'Heard'
-                            },
-                            value: {
-                                text: data['p-heard-all'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'primary/heard.html?from-check=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            } if data['any-primary'] == 'yes'
-                        },
-                        {
-                            key: {
-                                text: 'Reason why total lodged does not match total number actioned'
-                            },
-                            value: {
-                                text: data['p-lodged-query-all'] if data['any-primary'] == 'yes' else 'Not applicable'
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'primary/check-lodged.html?from-check=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            } if data['any-primary'] == 'yes'
-                        } if ((data['p-lodged-all'] | int) > [data['p-withdrawn-all'], data['p-heard-all']] | stringSum)
-                    }
+                        }
+                         ]
                 }) }}
-
+                
                 {{ govukSummaryList ({
                     rows: [
                         {
@@ -236,9 +200,41 @@
                                     }
                                 ]
                             } if data['any-primary'] == 'yes'
+                        },
+                        {
+                            key: {
+                                text: 'Total heard'
+                            },
+                            value: {
+                                text: [data['p-in-favour-all'], data['p-rejected-all']] | stringSum | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            }
                         }
-                    ]
+                         ]
                 }) }}
+                
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Reason why total lodged does not match total number actioned'
+                            },
+                            value: {
+                                text: data['p-lodged-query-all'] if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/check-lodged.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            } if data['any-primary'] == 'yes'
+                        } if ((data['p-lodged-all'] | int) > [data['p-withdrawn-all'], data['p-heard-all']] | stringSum)
+                    }
+                }) }}
+
 
                 <h2 class="govuk-heading-m">Admission appeals for primary schools: infant classes</h2>
 
@@ -246,7 +242,7 @@
                     rows: [
                         {
                             key: {
-                                text: 'Total lodged'
+                                text: 'Appeals lodged'
                             },
                             value: {
                                 text: data['p-lodged-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
@@ -279,46 +275,10 @@
                                     }
                                 ]
                             } if data['any-primary'] == 'yes'
-                        },
-                        {
-                            key: {
-                                text: 'Heard'
-                            },
-                            value: {
-                                text: data['p-heard-infant'] | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'primary/heard.html?from-check=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            } if data['any-primary'] == 'yes'
-                        },
-                        {
-                            key: {
-                                text: 'Reason why total lodged does not match total number actioned'
-                            },
-                            value: {
-                                text: data['p-lodged-query-infant'] if data['any-primary'] == 'yes' else 'Not applicable'
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'primary/check-lodged.html?from-check=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            } if data['any-primary'] == 'yes'
-                        } if ((data['p-lodged-infant'] | int) > [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum)
-                    }
+                        }
+                         ]
                 }) }}
-
+                
                 {{ govukSummaryList ({
                     rows: [
                         {
@@ -356,10 +316,40 @@
                                     }
                                 ]
                             } if data['any-primary'] == 'yes'
+                        },
+                        {
+                            key: {
+                                text: 'Total heard'
+                            },
+                            value: {
+                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum | friendlyNumber if data['any-primary'] == 'yes' else 'Not applicable'
+                            }
                         }
-                    ]
+                         ]
                 }) }}
-
+                
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Reason why total lodged does not match total number actioned'
+                            },
+                            value: {
+                                text: data['p-lodged-query-infant'] if data['any-primary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'primary/check-lodged.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            } if data['any-primary'] == 'yes'
+                        } if ((data['p-lodged-infant'] | int) > [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum)
+                    }
+                }) }}
 
                 <h2 class="govuk-heading-m">Admission appeals for secondary schools</h2>
 
@@ -390,7 +380,7 @@
                     rows: [
                         {
                             key: {
-                                text: 'Total lodged'
+                                text: 'Appeals lodged'
                             },
                             value: {
                                 text: data['s-lodged-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
@@ -423,44 +413,8 @@
                                     }
                                 ]
                             } if data['any-secondary'] == 'yes'
-                        },
-                        {
-                            key: {
-                                text: 'Heard'
-                            },
-                            value: {
-                                text: data['s-heard-all'] | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'secondary/heard.html?from-check=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            } if data['any-secondary'] == 'yes'
-                        },
-                        {
-                            key: {
-                                text: 'Reason why total lodged does not match total number actioned'
-                            },
-                            value: {
-                                text: data['s-lodged-query-all'] if data['any-secondary'] == 'yes' else 'Not applicable'
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'secondary/check-lodged.html?from-check=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            } if data['any-secondary'] == 'yes'
-                        } if ((data['s-lodged-all'] | int) > [data['s-withdrawn-all'], data['s-heard-all']] | stringSum)
-                    }
+                        }
+                    ]
                 }) }}
 
                 {{ govukSummaryList ({
@@ -500,8 +454,39 @@
                                     }
                                 ]
                             } if data['any-secondary'] == 'yes'
+                        },
+                        {
+                            key: {
+                                text: 'Total heard'
+                            },
+                            value: {
+                                text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum | friendlyNumber if data['any-secondary'] == 'yes' else 'Not applicable'
+                            }
                         }
-                    ]
+                         ]
+                }) }}
+                
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Reason why total lodged does not match total number actioned'
+                            },
+                            value: {
+                                text: data['s-lodged-query-all'] if data['any-secondary'] == 'yes' else 'Not applicable'
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'secondary/check-lodged.html?from-check=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            } if data['any-secondary'] == 'yes'
+                        } if ((data['s-lodged-all'] | int) > [data['s-withdrawn-all'], data['s-heard-all']] | stringSum)
+                    }
                 }) }}
 
                 <h2 class="govuk-heading-m">Completion time</h2>
