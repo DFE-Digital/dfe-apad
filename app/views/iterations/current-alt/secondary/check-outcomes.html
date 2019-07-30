@@ -85,12 +85,7 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                }) }}
-
-                {{ govukSummaryList ({
-                    rows: [
+                        },
                         {
                             key: {
                                 text: 'Withdrawn'
@@ -148,6 +143,14 @@
                                         visuallyHiddenText: 'withdrawn'
                                     }
                                 ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum | friendlyNumber
                             }
                         }
                     ]

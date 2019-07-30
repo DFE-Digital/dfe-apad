@@ -65,11 +65,11 @@ rejected? {% endblock %} {% block beforeContent %}
                     classes: 'govuk-input--width-5',
                     hint: {
                         text: 'Based on what you have told us, it appears there were ' + infantRefNumber | friendlyNumber + ' appeals lodged for infant classes that were neither withdrawn or decided in the favour of parents'
-                    } if false,
+                    } if infantRefNumber > 1,
                     type: 'number',
                     errorMessage: {
                         text: 'There cannot be more appeals rejected for infant classes than all classes combined'
-                    } if infantRefNumber > 1,
+                    } if hasError,
                     label: {
                         text: 'For infant classes only'
                     }

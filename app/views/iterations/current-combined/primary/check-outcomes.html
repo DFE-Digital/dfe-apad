@@ -90,12 +90,7 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                }) }}
-
-                {{ govukSummaryList ({
-                    rows: [
+                        },
                         {
                             key: {
                                 text: 'Withdrawn'
@@ -154,6 +149,14 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['p-in-favour-all'], data['p-rejected-all']] | stringSum | friendlyNumber
+                            }
                         }
                     ]
                 }) }}
@@ -163,7 +166,7 @@
                     {% if allClassesQuery %}
                     
                         {{ govukWarningText ({
-                            text: 'Based on what you have told us it appears there were ' + (data['p-lodged-all'] | int - [data['p-withdrawn-all'], allHeardTotal] | stringSum) + ' appeals for all primary school classes that were neither withdrawn or decided on by an appeals panel',
+                            text: 'Based on what you have told us it appears there were ' + (data['p-lodged-all'] | int - [data['p-withdrawn-all'], allHeardTotal] | stringSum) + ' appeals for all primary school classes that were neither withdrawn or heard by an appeals panel',
                             iconFallbackText: 'Warning'
                         }) }}
 
@@ -217,12 +220,7 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                }) }}
-
-                {{ govukSummaryList ({
-                    rows: [
+                        },
                         {
                             key: {
                                 text: 'Withdrawn'
@@ -281,6 +279,14 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum | friendlyNumber
+                            }
                         }
                     ]
                 }) }}
@@ -290,7 +296,7 @@
                     {% if infantClassesQuery %}
 
                         {{ govukWarningText ({
-                            text: 'Based on what you have told us it appears there were ' + (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], infantHeardTotal] | stringSum) + ' appeals for infant classes that were neither withdrawn or decided on by an appeals panel',
+                            text: 'Based on what you have told us it appears there were ' + (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], infantHeardTotal] | stringSum) + ' appeals for infant classes that were neither withdrawn or heard by an appeals panel',
                             iconFallbackText: 'Warning'
                         }) }}
 
