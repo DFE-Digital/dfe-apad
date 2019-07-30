@@ -231,7 +231,7 @@
                                     }
                                 ]
                             } if data['any-primary'] == 'yes'
-                        } if ((data['p-lodged-all'] | int) > [data['p-withdrawn-all'], data['p-heard-all']] | stringSum)
+                        } if ((data['p-lodged-all'] | int) != [data['p-withdrawn-all'], data['p-in-favour-all'], data['p-rejected-all']] | stringSum)
                     }
                 }) }}
 
@@ -347,7 +347,7 @@
                                     }
                                 ]
                             } if data['any-primary'] == 'yes'
-                        } if ((data['p-lodged-infant'] | int) > [data['p-withdrawn-infant'], data['p-heard-infant']] | stringSum)
+                        } if ((data['p-lodged-infant'] | int) != [data['p-withdrawn-infant'], data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum)
                     }
                 }) }}
 
@@ -485,7 +485,7 @@
                                     }
                                 ]
                             } if data['any-secondary'] == 'yes'
-                        } if ((data['s-lodged-all'] | int) > [data['s-withdrawn-all'], data['s-heard-all']] | stringSum)
+                        } if ((data['s-lodged-all'] | int) != [data['s-withdrawn-all'], data['s-in-favour-all'], data['s-rejected-all']] | stringSum)
                     }
                 }) }}
 

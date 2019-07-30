@@ -25,8 +25,8 @@ rejected? {% endblock %} {% block beforeContent %}
 			<span class="govuk-caption-xl">Secondary schools</span>
 			<h1 class="govuk-heading-xl">How many appeals were rejected?</h1>
 
-			{% set allRefNumber = (data['p-lodged-all'] | int -
-			data['p-withdrawn-all'] | int - data['p-in-favour-all'] | int) %}
+			{% set allRefNumber = (data['s-lodged-all'] | int -
+			data['s-withdrawn-all'] | int - data['s-in-favour-all'] | int) %}
 
 			{{ govukInput ({
                     id: 's-rejected-all',
@@ -34,7 +34,7 @@ rejected? {% endblock %} {% block beforeContent %}
                     value: data['s-rejected-all'] if data['s-rejected-all'] else '',
 					classes: 'govuk-input--width-5',
 					hint: {
-                        text: 'Based on what you have told us, it appears there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all secondary school classes that have not been withdrawn or decided in the favour of parents'
+                        text: 'Based on what you have told us, it appears there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all secondary school classes that were neither withdrawn or decided in the favour of parents'
                     } if allRefNumber > 1,
                     label: {
                         text: 'For all secondary school classes'
