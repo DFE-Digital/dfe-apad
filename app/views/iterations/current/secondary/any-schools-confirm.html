@@ -74,9 +74,9 @@ beforeContent %}
 <script>
 	var nextPageRoutes = {
 		yes:
-			'{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
+			'{{ "../check-your-answers.html" if data["any-secondary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
 		no:
-			'{{ "../no-schools.html" if data["any-primary"] == "no" else ("../check-your-answers.html" if data["from-check"] == "true" else "../completion-time.html") }}'
+			'{{ "../check-your-answers.html" if data["from-check"] == "true" else "../completion-time.html" }}'
 	}
 </script>
 

@@ -73,7 +73,8 @@
                                 text: 'Appeals lodged'
                             },
                             value: {
-                                text: data['s-lodged-all']
+                                text: data['s-lodged-all'] | friendlyNumber,
+                                classes: 'queried-data' if allClassesQuery
                             },
                             actions: {
                                 items: [
@@ -91,7 +92,8 @@
                                 text: 'Withdrawn'
                             },
                             value: {
-                                text: data['s-withdrawn-all']
+                                text: data['s-withdrawn-all'] | friendlyNumber,
+                                classes: 'queried-data' if allClassesQuery
                             },
                             actions: {
                                 items: [
@@ -150,7 +152,8 @@
                                 text: 'Total heard by an appeals panel'
                             },
                             value: {
-                                text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum | friendlyNumber
+                                text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum | friendlyNumber,
+                                classes: 'queried-data' if allClassesQuery
                             }
                         }
                     ]
@@ -160,10 +163,25 @@
 
                     {% if allClassesQuery %}
                     
-                        {{ govukWarningText ({
-                            text: 'Based on what you have told us it appears there were ' + (data['s-lodged-all'] | int - [data['s-withdrawn-all'], allHeardTotal] | stringSum) + ' appeals for all primary school classes that were neither withdrawn or decided on by an appeals panel',
-                            iconFallbackText: 'Warning'
-                        }) }}
+                         {% set allQueryRefNumber = (data['s-lodged-all'] | int) - [data['s-withdrawn-all'], allHeardTotal] | stringSum %}
+
+                        {% if allQueryRefNumber == 1 %}
+
+                            {{ govukWarningText ({
+                                text: 'Based on what you have told us it appears that there was 1 appeal that was neither withdrawn or heard by an appeals panel',
+                                iconFallbackText: 'Query',
+                                classes: 'query-notice'
+                            }) }}
+
+                        {% else %}
+
+                            {{ govukWarningText ({
+                                text: 'Based on what you have told us it appears that there were ' + allQueryRefNumber | friendlyNumber + ' appeals that were neither withdrawn or heard by an appeals panel',
+                                iconFallbackText: 'Query',
+                                classes: 'query-notice'
+                            }) }}
+
+                        {% endif %}
 
                         {% if not allClassesError and not infantClassesError %}
 

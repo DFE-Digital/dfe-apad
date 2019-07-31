@@ -1,0 +1,148 @@
+{% extends 'layout.html' %}
+
+{% block pageTitle %}
+    Check the total number of appeal outcomes
+{% endblock %}
+
+{% block beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <form action="check-outcomes.html">
+
+                <span class="govuk-caption-xl">Primary schools</span>
+                <h1 class="govuk-heading-xl">Check the total number of appeals heard by an appeals panel</h1>
+
+                <h2 class="govuk-heading-m">All primary school classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Found in favour of parents'
+                            },
+                            value: {
+                                text: data['p-in-favour-all']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'in-favour.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Rejected'
+                            },
+                            value: {
+                                text: data['p-rejected-all']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'rejected.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['p-in-favour-all'], data['p-rejected-all']] | stringSum | friendlyNumber
+                            }
+                        }
+                    ]
+                }) }}
+
+                <h2 class="govuk-heading-m">Infant classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Found in favour of parents'
+                            },
+                            value: {
+                                text: data['p-in-favour-infant'] | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'in-favour.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Rejected'
+                            },
+                            value: {
+                                text: data['p-rejected-infant'] | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'rejected.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum | friendlyNumber
+                            }
+                        }
+                    ]
+                }) }}
+
+                {{ govukButton ({
+                    html: 'Continue'
+                }) }}
+
+            </form>
+
+        </div>
+
+</div>
+
+{% endblock %}

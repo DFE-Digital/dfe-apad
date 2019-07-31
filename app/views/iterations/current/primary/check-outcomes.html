@@ -67,9 +67,59 @@
                 {% endif %}
 
                 <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">Check the total number of appeal outcomes against the number of appeals heard</h1>
+                <h1 class="govuk-heading-xl">Check the total number of actioned appeals against the number that were lodged</h1>
 
                 <h2 class="govuk-heading-m">All primary school classes</h2>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['p-withdrawn-all'] | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'withdrawn.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['p-in-favour-all'], data['p-rejected-all']] | stringSum | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'check-heard.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total actioned'
+                            },
+                            value: {
+                                text: [data['p-in-favour-all'], data['p-rejected-all'], data['p-withdrawn-all']] | stringSum | friendlyNumber,
+                                classes: 'queried-data' if allClassesQuery
+                            }
+                        }
+                    ]
+                }) }}
 
                 {{ govukSummaryList ({
                     rows: [
@@ -95,85 +145,11 @@
                     ]
                 }) }}
 
-                {{ govukSummaryList ({
-                    rows: [
-                        {
-                            key: {
-                                text: 'Withdrawn'
-                            },
-                            value: {
-                                text: data['p-withdrawn-all'],
-                                classes: 'queried-data' if allClassesQuery
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'withdrawn.html?from-p-outcome-totals=true',
-                                        visuallyHiddenText: 'withdrawn'
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }) }}
-
-                {{ govukSummaryList ({
-                    rows: [
-                        {
-                            key: {
-                                text: 'Found in favour of parents'
-                            },
-                            value: {
-                                text: data['p-in-favour-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'in-favour.html?from-p-outcome-totals=true',
-                                        visuallyHiddenText: 'total lodged'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Rejected'
-                            },
-                            value: {
-                                text: data['p-rejected-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'rejected.html?from-p-outcome-totals=true',
-                                        visuallyHiddenText: 'withdrawn'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Total heard by an appeals panel'
-                            },
-                            value: {
-                                text: [data['p-in-favour-all'], data['p-rejected-all']] | stringSum | friendlyNumber,
-                                classes: 'queried-data' if allClassesQuery
-                            }
-                        }
-                    ]
-                }) }}
-
                 {% if not allClassesFine %}
 
                     {% if allClassesQuery %}
 
-                        {% set infantQueryRefNumber = (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], infantHeardTotal] | stringSum) %}
+                        {% set allQueryRefNumber = (data['p-lodged-all'] | int) - [data['p-withdrawn-all'], allHeardTotal] | stringSum %}
 
                         {% if allQueryRefNumber == 1 %}
 
@@ -186,7 +162,7 @@
                         {% else %}
 
                             {{ govukWarningText ({
-                                text: 'Based on what you have told us it appears that there were ' + allQueryRefNumber + ' appeals for all primary school classes that were neither withdrawn or heard by an appeals panel',
+                                text: 'Based on what you have told us it appears that there were ' + allQueryRefNumber | friendlyNumber + ' appeals for all primary school classes that were neither withdrawn or heard by an appeals panel',
                                 iconFallbackText: 'Query',
                                 classes: 'query-notice'
                             }) }}
@@ -228,6 +204,56 @@
                     rows: [
                         {
                             key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'total-heard.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'heard'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['p-withdrawn-infant'] | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'withdrawn.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total actioned'
+                            },
+                            value: {
+                                text: [data['p-in-favour-infant'], data['p-rejected-infant'], data['p-withdrawn-infant']] | stringSum | friendlyNumber,
+                                classes: 'queried-data' if infantClassesQuery
+                            }
+                        }
+                    ]
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
                                 text: 'Appeals lodged'
                             },
                             value: {
@@ -248,85 +274,11 @@
                         ]
                 }) }}
 
-                {{ govukSummaryList ({
-                    rows: [
-                        {
-                            key: {
-                                text: 'Withdrawn'
-                            },
-                            value: {
-                                text: data['p-withdrawn-infant'] | friendlyNumber,
-                                classes: 'queried-data' if infantClassesQuery
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'withdrawn.html?from-p-outcome-totals=true',
-                                        visuallyHiddenText: 'withdrawn'
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }) }}
-
-                {{ govukSummaryList ({
-                    rows: [
-                        {
-                            key: {
-                                text: 'Found in favour of parents'
-                            },
-                            value: {
-                                text: data['p-in-favour-infant'] | friendlyNumber
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'in-favour.html?from-p-outcome-totals=true',
-                                        visuallyHiddenText: 'total lodged'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Rejected'
-                            },
-                            value: {
-                                text: data['p-rejected-infant'] | friendlyNumber
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'rejected.html?from-p-outcome-totals=true',
-                                        visuallyHiddenText: 'withdrawn'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Total heard by an appeals panel'
-                            },
-                            value: {
-                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum | friendlyNumber,
-                                classes: 'queried-data' if infantClassesQuery
-                            }
-                        }
-                    ]
-                }) }}
-
                 {% if not infantClassesFine %}
 
                     {% if infantClassesQuery %}
 
-                        {% set infantQueryRefNumber = (data['p-lodged-infant'] | int - [data['p-withdrawn-infant'], infantHeardTotal] | stringSum) %}
+                        {% set infantQueryRefNumber = (data['p-lodged-infant'] | int) - [data['p-withdrawn-infant'], infantHeardTotal] | stringSum %}
 
                         {% if infantQueryRefNumber == 1 %}
 
@@ -339,7 +291,7 @@
                         {% else %}
 
                             {{ govukWarningText ({
-                                text: 'Based on what you have told us it appears that there were ' + infantQueryRefNumber + ' appeals for infant classes that were neither withdrawn or heard by an appeals panel',
+                                text: 'Based on what you have told us it appears that there were ' + infantQueryRefNumber | friendlyNumber + ' appeals for infant classes that were neither withdrawn or heard by an appeals panel',
                                 iconFallbackText: 'Query',
                                 classes: 'query-notice'
                             }) }}
