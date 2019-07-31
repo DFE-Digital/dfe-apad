@@ -76,7 +76,7 @@ beforeContent %}
 		yes:
 			'{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
 		no:
-			'{{ "../check-your-answers.html" if data["from-check"] == "true" else "../secondary/any-schools.html" }}'
+			'{{ "../no-schools.html" if data["any-primary"] == "no" else ("../check-your-answers.html" if data["from-check"] == "true" else "../completion-time.html") }}'
 	}
 </script>
 
