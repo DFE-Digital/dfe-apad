@@ -154,7 +154,7 @@
                         {% if allQueryRefNumber == 1 %}
 
                             {{ govukWarningText ({
-                                text: 'Based on what you have told us it appears that there was 1 appeal for all primary school classes that was neither withdrawn or heard by an appeals panel',
+                                text: 'Based on what you have told us it appears that there was 1 appeal for all primary school classes that was neither withdrawn nor heard by an appeals panel',
                                 iconFallbackText: 'Query',
                                 classes: 'query-notice'
                             }) }}
@@ -162,7 +162,7 @@
                         {% else %}
 
                             {{ govukWarningText ({
-                                text: 'Based on what you have told us it appears that there were ' + allQueryRefNumber | friendlyNumber + ' appeals for all primary school classes that were neither withdrawn or heard by an appeals panel',
+                                text: 'Based on what you have told us it appears that there were ' + allQueryRefNumber | friendlyNumber + ' appeals for all primary school classes that were neither withdrawn nor heard by an appeals panel',
                                 iconFallbackText: 'Query',
                                 classes: 'query-notice'
                             }) }}
@@ -283,7 +283,7 @@
                         {% if infantQueryRefNumber == 1 %}
 
                             {{ govukWarningText ({
-                                text: 'Based on what you have told us it appears that there was 1 appeal for infant classes that was neither withdrawn or heard by an appeals panel',
+                                text: 'Based on what you have told us it appears that there was 1 appeal for infant classes that was neither withdrawn nor heard by an appeals panel',
                                 iconFallbackText: 'Query',
                                 classes: 'query-notice'
                             }) }}
@@ -291,7 +291,7 @@
                         {% else %}
 
                             {{ govukWarningText ({
-                                text: 'Based on what you have told us it appears that there were ' + infantQueryRefNumber | friendlyNumber + ' appeals for infant classes that were neither withdrawn or heard by an appeals panel',
+                                text: 'Based on what you have told us it appears that there were ' + infantQueryRefNumber | friendlyNumber + ' appeals for infant classes that were neither withdrawn nor heard by an appeals panel',
                                 iconFallbackText: 'Query',
                                 classes: 'query-notice'
                             }) }}

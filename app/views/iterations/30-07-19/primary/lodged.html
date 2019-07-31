@@ -22,23 +22,21 @@ beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-        <form action="/validate-subset" method="POST">
-
-            {% set hasError = data['subsetError'] == 'true' %}
-            {% if hasError %}
-                {{
-                    govukErrorSummary({
-                        titleText: 'There is a problem',
-                        errorList: [
-                            {
-                                text:
-                                    'There cannot be more appeals lodged for infant classes than all classes combined',
-                                href: '#p-lodged-infant-error'
-                            }
-                        ]
-                    })
-                }}
-            {% endif%}
+		<form action="/validate-subset" method="POST">
+			{% set hasError = data['subsetError'] == 'true' %} {% if hasError %}
+			{{
+				govukErrorSummary({
+					titleText: 'There is a problem',
+					errorList: [
+						{
+							text:
+								'There cannot be more appeals lodged for infant classes than all classes combined',
+							href: '#p-lodged-infant-error'
+						}
+					]
+				})
+			}}
+			{% endif%}
 
 			<span class="govuk-caption-xl">Primary schools</span>
 			<h1 class="govuk-heading-xl">
@@ -48,7 +46,8 @@ beforeContent %}
 
 			{{
 				govukInsetText({
-					text: 'Only tell us about schools which will be voluntary controlled or community schools on 16 January 2020.'
+					text:
+						'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
 				})
 			}}
 
@@ -76,7 +75,11 @@ beforeContent %}
                     }
                 }) }}
 
-			<input type="hidden" name="success-page" value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/withdrawn.html' }}" />
+			<input
+				type="hidden"
+				name="success-page"
+				value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/withdrawn.html' }}"
+			/>
 
 			{{
 				govukButton({
