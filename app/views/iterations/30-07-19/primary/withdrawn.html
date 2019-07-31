@@ -1,10 +1,6 @@
-{% extends 'layout.html' %}
-
-{% block pageTitle %}
-    How many of these lodged appeals were withdrawn before reaching an appeals panel?
-{% endblock %}
-
-{% block beforeContent %}
+{% extends 'layout.html' %} {% block pageTitle %} How many of these lodged
+appeals were withdrawn before reaching an appeals panel? {% endblock %} {% block
+beforeContent %}
 
 {{
 	govukPhaseBanner({
@@ -15,45 +11,47 @@
 	})
 }}
 
-    {{ govukBackLink ({
-        text: 'Back',
-        href: 'javascript:history.back()'
-    }) }}
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
 
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 
 <div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="/validate-subset" method="POST">
+			{% set hasError = data['subsetError'] == 'true' %} {% if hasError %}
+			{{
+				govukErrorSummary({
+					titleText: 'There is a problem',
+					errorList: [
+						{
+							text:
+								'There cannot be more withdrawn appeals for infant classes than all primary school classes combined',
+							href: '#p-withdrawn-infant-error'
+						}
+					]
+				})
+			}}
+			{% endif%}
 
-        <div class="govuk-grid-column-two-thirds">
+			<span class="govuk-caption-xl">Primary schools</span>
+			<h1 class="govuk-heading-xl">
+				How many of the appeals lodged were withdrawn before reaching an appeals
+				panel?
+			</h1>
 
-            <form action="/validate-subset" method="POST">
+			{{
+				govukInsetText({
+					text:
+						'Include appeals that were no longer needed because a school place was offered before a hearing.'
+				})
+			}}
 
-                {% set hasError = data['subsetError'] == 'true' %}
-                {% if hasError %}
-                    {{
-                        govukErrorSummary({
-                            titleText: 'There is a problem',
-                            errorList: [
-                                {
-                                    text:
-                                        'There cannot be more withdrawn appeals for infant classes than all classes combined',
-                                    href: '#p-withdrawn-infant-error'
-                                }
-                            ]
-                        })
-                    }}
-                {% endif%}
-
-                <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">How many of the appeals lodged were withdrawn before reaching an appeals panel?</h1>
-
-                {{ govukInsetText ({
-                    text: 'Include appeals that were no longer needed because a school place was offered before a hearing.'
-                }) }}
-
-                {{ govukInput ({
+			{{ govukInput ({
                     id: 'p-withdrawn-all',
                     name: 'p-withdrawn-all',
                     value: data['p-withdrawn-all'] if data['p-withdrawn-all'] else '',
@@ -64,31 +62,33 @@
                     }
                 }) }}
 
-                {{ govukInput ({
+			{{ govukInput ({
                     id: 'p-withdrawn-infant',
                     name: 'p-withdrawn-infant',
                     value: data['p-withdrawn-infant'] if data['p-withdrawn-infant'] else '',
                     classes: 'govuk-input--width-5',
                     type: 'number',
                     errorMessage: {
-                        text: 'There cannot be more withdrawn appeals for infant classes than all classes combined'
+                        text: 'There cannot be more withdrawn appeals for infant classes than all primary school classes combined'
                     } if hasError,
                     label: {
                         text: 'For infant classes only'
                     }
                 }) }}
 
-                <input type="hidden" name="success-page" value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/heard.html' }}" />
-                
+			<input
+				type="hidden"
+				name="success-page"
+				value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/heard.html' }}"
+			/>
 
-                {{ govukButton ({
-                    html: 'Continue'
-                }) }}
-
-            </form>
-
-        </div>
-
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
 </div>
 
 {% endblock %}

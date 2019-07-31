@@ -1,10 +1,5 @@
-{% extends 'layout.html' %}
-
-{% block pageTitle %}
-    How many appeals were rejected?
-{% endblock %}
-
-{% block beforeContent %}
+{% extends 'layout.html' %} {% block pageTitle %} How many appeals were
+rejected? {% endblock %} {% block beforeContent %}
 
 {{
 	govukPhaseBanner({
@@ -15,41 +10,37 @@
 	})
 }}
 
-    {{ govukBackLink ({
-        text: 'Back',
-        href: 'javascript:history.back()'
-    }) }}
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
 
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 
 <div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="/validate-subset" method="POST">
+			{% set hasError = data['subsetError'] == 'true' %} {% if hasError %}
+			{{
+				govukErrorSummary({
+					titleText: 'There is a problem',
+					errorList: [
+						{
+							text:
+								'There cannot be more appeals rejected for infant classes than all primary school classes combined',
+							href: '#p-lodged-infant-error'
+						}
+					]
+				})
+			}}
+			{% endif%}
 
-        <div class="govuk-grid-column-two-thirds">
+			<span class="govuk-caption-xl">Primary schools</span>
+			<h1 class="govuk-heading-xl">How many appeals were rejected?</h1>
 
-            <form action="/validate-subset" method="POST">
-
-                {% set hasError = data['subsetError'] == 'true' %}
-                {% if hasError %}
-                    {{
-                        govukErrorSummary({
-                            titleText: 'There is a problem',
-                            errorList: [
-                                {
-                                    text:
-                                        'There cannot be more appeals rejected for infant classes than all classes combined',
-                                    href: '#p-lodged-infant-error'
-                                }
-                            ]
-                        })
-                    }}
-                {% endif%}
-
-                <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">How many appeals were rejected?</h1>
-
-                {{ govukInput ({
+			{{ govukInput ({
                     id: 'p-rejected-all',
                     name: 'p-rejected-all',
                     value: data['p-rejected-all'] if data['p-rejected-all'] else '',
@@ -59,31 +50,33 @@
                     }
                 }) }}
 
-                {{ govukInput ({
+			{{ govukInput ({
                     id: 'p-rejected-infant',
                     name: 'p-rejected-infant',
                     value: data['p-rejected-infant'] if data['p-rejected-infant'] else '',
                     classes: 'govuk-input--width-5',
                     type: 'number',
                     errorMessage: {
-                        text: 'There cannot be more appeals rejected for infant classes than all classes combined'
+                        text: 'There cannot be more appeals rejected for infant classes than all primary school classes combined'
                     } if hasError,
                     label: {
                         text: 'For infant classes only'
                     }
                 }) }}
 
-                <input type="hidden" name="success-page" value="#root#/primary/check-outcomes.html">
+			<input
+				type="hidden"
+				name="success-page"
+				value="#root#/primary/check-outcomes.html"
+			/>
 
-
-                {{ govukButton ({
-                    html: 'Continue'
-                }) }}
-
-            </form>
-
-        </div>
-
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
 </div>
 
 {% endblock %}
