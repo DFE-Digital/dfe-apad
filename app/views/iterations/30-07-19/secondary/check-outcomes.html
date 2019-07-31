@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+
+{% set allClassesError = (data['s-heard-all'] | int) != [data['s-in-favour-all'], data['s-rejected-all']] | stringSum %}
+
+{% block pageTitle %} Check the total number of
+appeal outcomes {% endblock %} {% block beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form action="{{ '../check-your-answers.html' if data['from-check'] else '../completion-time.html' }}">
+			<span class="govuk-caption-xl">Secondary schools</span>
+			<h1 class="govuk-heading-xl">
+				Check the total number of appeal outcomes against the number of appeals heard
+			</h1>
+
+			{{ govukSummaryList ({
+				rows: [
+					{
+						key: {
+							text: 'In favour of parents'
+						},
+						value: {
+							text: data['s-in-favour-all']
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+                                    classes: 'govuk-link--no-visited-state',
+									href: 'in-favour.html?from-s-outcome-totals=true',
+									visuallyHiddenText: 'total lodged'
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Rejected'
+						},
+						value: {
+							text: data['s-rejected-all']
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+                                    classes: 'govuk-link--no-visited-state',
+									href: 'rejected.html?from-s-outcome-totals=true',
+									visuallyHiddenText: 'withdrawn'
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Total appeal outcomes'
+						},
+						value: {
+							text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum
+						}
+					}
+				]
+			}) }}
+
+			{{ govukSummaryList ({
+				rows: [
+					{
+						key: {
+							text: 'Appeals heard'
+						},
+						value: {
+							text: data['s-heard-all']
+						},
+						actions: {
+							items: [
+								{
+									text: 'Review',
+                                    classes: 'govuk-link--no-visited-state',
+									href: 'check-lodged.html?from-s-outcome-totals=true',
+									visuallyHiddenText: 'heard'
+								}
+							]
+						}
+					}
+				]
+			}) }}
+
+			{% if allClassesError %}
+
+				{{ govukErrorMessage({
+					text: 'There must be the same total number of appeal outcomes as the number heard, you must fix this before you can continue',
+					visuallyHiddenText: 'Error'
+				}) }}
+
+			{% else %}
+
+				{{
+					govukButton({
+						html: 'Continue'
+					})
+				}}
+
+			{% endif %}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

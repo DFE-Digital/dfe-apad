@@ -25,8 +25,8 @@ beforeContent %}
 		<form method="post">
 			<span class="govuk-caption-xl">Secondary schools</span>
 			<h1 class="govuk-heading-xl">
-				Does your local authority have any voluntary-controlled or community
-				secondary schools?
+				You have told us that your local authority does not have any
+				voluntary-controlled or community secondary schools, is this correct?
 			</h1>
 
 			{{
@@ -44,7 +44,7 @@ beforeContent %}
 					fieldset: {
 						legend: {
 							text:
-								'Does your local authority have any voluntary-controlled or community secondary schools?',
+								'You have told us that your local authority does not have any voluntary-controlled or community secondary schools, is this correct?',
 							isPageHeading: true,
 							classes: 'govuk-visually-hidden'
 						}
@@ -52,11 +52,11 @@ beforeContent %}
 					items: [
 						{
 							text: 'Yes',
-							value: 'yes'
+							value: 'no'
 						},
 						{
 							text: 'No',
-							value: 'no'
+							value: 'yes'
 						}
 					]
 				})
@@ -74,8 +74,9 @@ beforeContent %}
 <script>
 	var nextPageRoutes = {
 		yes:
-			'{{ "../check-your-answers.html" if data["any-secondary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
-		no: 'any-schools-confirm.html'
+			'{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
+		no:
+			'{{ "../check-your-answers.html" if data["from-check"] == "true" else "../secondary/any-schools.html" }}'
 	}
 </script>
 

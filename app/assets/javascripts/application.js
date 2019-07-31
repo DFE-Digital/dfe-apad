@@ -139,3 +139,5 @@ $('.govuk-summary-list__key').each(function() {
 			.remove()
 	}
 })
+
+$('.query-notice .govuk-warning-text__icon').text('?')

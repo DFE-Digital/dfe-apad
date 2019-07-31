@@ -2,14 +2,31 @@
 $govuk-global-styles: true;
 
 // Import GOV.UK Frontend and any extension styles if extensions have been configured
-@import "lib/extensions/extensions";
+@import 'lib/extensions/extensions';
 
 // Patterns that aren't in Frontend
-@import "patterns/step-by-step-navigation";
-@import "patterns/task-list";
-@import "patterns/related-items";
+@import 'patterns/step-by-step-navigation';
+@import 'patterns/task-list';
+@import 'patterns/related-items';
 
 // Components that aren't in Frontend
-@import "components/cookie-banner";
+@import 'components/cookie-banner';
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+
+.queried-data {
+	&::before {
+		content: '?';
+		display: inline-block;
+		height: 16px;
+		width: 16px;
+		font-size: 14px;
+		font-weight: bold;
+		padding: 2px;
+		background-color: govuk-colour('black');
+		color: govuk-colour('white');
+		text-align: center;
+		border-radius: 50%;
+		transform: translateY(-1px) translateX(-5px);
+	}
+}

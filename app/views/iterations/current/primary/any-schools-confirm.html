@@ -23,28 +23,28 @@ beforeContent %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
-			<span class="govuk-caption-xl">Secondary schools</span>
+			<span class="govuk-caption-xl">Primary schools</span>
 			<h1 class="govuk-heading-xl">
-				Does your local authority have any voluntary-controlled or community
-				secondary schools?
+				You have told us that your local authority does not have any
+				voluntary-controlled or community primary schools, is this correct?
 			</h1>
 
 			{{
 				govukInsetText({
 					text:
-						'This includes any voluntary-controlled or community middle schools deemed as secondary schools.'
+						'This includes any voluntary-controlled or community middle schools deemed as primary schools.'
 				})
 			}}
 
 			{{
 				govukRadios({
 					classes: 'govuk-radios--inline',
-					idPrefix: 'any-secondary',
-					name: 'any-secondary',
+					idPrefix: 'any-primary',
+					name: 'any-primary',
 					fieldset: {
 						legend: {
 							text:
-								'Does your local authority have any voluntary-controlled or community secondary schools?',
+								'You have told us that your local authority does not have any voluntary-controlled or community primary schools, is this correct?',
 							isPageHeading: true,
 							classes: 'govuk-visually-hidden'
 						}
@@ -52,11 +52,11 @@ beforeContent %}
 					items: [
 						{
 							text: 'Yes',
-							value: 'yes'
+							value: 'no'
 						},
 						{
 							text: 'No',
-							value: 'no'
+							value: 'yes'
 						}
 					]
 				})
@@ -74,8 +74,9 @@ beforeContent %}
 <script>
 	var nextPageRoutes = {
 		yes:
-			'{{ "../check-your-answers.html" if data["any-secondary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
-		no: 'any-schools-confirm.html'
+			'{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
+		no:
+			'{{ "../check-your-answers.html" if data["from-check"] == "true" else "../secondary/any-schools.html" }}'
 	}
 </script>
 

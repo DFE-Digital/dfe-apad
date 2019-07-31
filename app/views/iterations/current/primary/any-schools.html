@@ -1,10 +1,6 @@
-{% extends 'layout.html' %}
-
-{% block pageTitle %}
-    Does your local authority have any voluntary-controlled or community primary schools?
-{% endblock %}
-
-{% block beforeContent %}
+{% extends 'layout.html' %} {% block pageTitle %} Does your local authority have
+any voluntary-controlled or community primary schools? {% endblock %} {% block
+beforeContent %}
 
 {{
 	govukPhaseBanner({
@@ -15,70 +11,72 @@
 	})
 }}
 
-    {{ govukBackLink ({
-        text: 'Back',
-        href: 'javascript:history.back()'
-    }) }}
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
 
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 
 <div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<span class="govuk-caption-xl">Primary schools</span>
+			<h1 class="govuk-heading-xl">
+				Does your local authority have any voluntary-controlled or community
+				primary schools?
+			</h1>
 
-        <div class="govuk-grid-column-two-thirds">
+			{{
+				govukInsetText({
+					text:
+						'This includes any voluntary-controlled or community middle schools deemed as primary schools.'
+				})
+			}}
 
-            <form method="post">
+			{{
+				govukRadios({
+					classes: 'govuk-radios--inline',
+					idPrefix: 'any-primary',
+					name: 'any-primary',
+					fieldset: {
+						legend: {
+							text:
+								'Does your local authority have any voluntary-controlled or community primary schools?',
+							isPageHeading: true,
+							classes: 'govuk-visually-hidden'
+						}
+					},
+					items: [
+						{
+							text: 'Yes',
+							value: 'yes'
+						},
+						{
+							text: 'No',
+							value: 'no'
+						}
+					]
+				})
+			}}
 
-                <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">Does your local authority have any voluntary-controlled or community primary schools?</h1>
-
-                {{ govukInsetText ({
-                    text: 'This includes any voluntary-controlled or community middle schools deemed as primary schools.'
-                }) }}
-
-                {{ govukRadios ({
-                    classes: 'govuk-radios--inline',
-                    idPrefix: 'any-primary',
-                    name: 'any-primary',
-                    fieldset: {
-                        legend: {
-                            text: 'Does your local authority have any voluntary-controlled or community primary schools?',
-                            isPageHeading: true,
-                            classes: 'govuk-visually-hidden'
-                        }
-                            },
-                            items: [
-                        {
-                            text: 'Yes',
-                            value: 'yes'
-                        },
-                        {
-                            text: 'No',
-                            value: 'no'
-                        }
-                    ]
-                }) }}
-
-                <input type="hidden" name="from-p-outcome-totals" value="false">
-
-                {{ govukButton ({
-                    html: 'Continue'
-                }) }}
-
-            </form>
-
-        </div>
-
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
 </div>
 
 <script>
-
-    var nextPageRoutes = {
-        yes: '{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
-        no: '{{ "../check-your-answers.html" if data["from-check"] == "true" else "../secondary/any-schools.html" }}'
-    }
-
+	var nextPageRoutes = {
+		yes:
+			'{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
+		no: 'any-schools-confirm.html'
+	}
 </script>
 
 {% endblock %}

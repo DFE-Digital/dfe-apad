@@ -22,9 +22,7 @@ beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form
-			action="{{ 'check-outcomes.html' if data['from-s-outcome-totals'] == 'true' else 'withdrawn.html' }}"
-		>
+		<form action="{{ 'check-lodged.html' if data['from-s-lodged-totals'] == 'true' else 'withdrawn.html' }}">
 			<span class="govuk-caption-xl">Secondary schools</span>
 			<h1 class="govuk-heading-xl">
 				How many appeals were lodged by parents for admissions to secondary
@@ -33,8 +31,7 @@ beforeContent %}
 
 			{{
 				govukInsetText({
-					text:
-						'Only tell us about schools which will be voluntary controlled or community schools on 16 January 2020.'
+					text: 'Only tell us about schools which will be voluntary controlled or community schools on 16 January 2020.'
 				})
 			}}
 

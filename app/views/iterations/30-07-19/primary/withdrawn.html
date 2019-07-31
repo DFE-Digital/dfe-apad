@@ -53,17 +53,11 @@
                     text: 'Include appeals that were no longer needed because a school place was offered before a hearing.'
                 }) }}
 
-                {% set allRefNumber = data['p-lodged-all'] | int %}
-                {% set infantRefNumber = data['p-lodged-infant'] | int %}
-
                 {{ govukInput ({
                     id: 'p-withdrawn-all',
                     name: 'p-withdrawn-all',
                     value: data['p-withdrawn-all'] if data['p-withdrawn-all'] else '',
                     classes: 'govuk-input--width-5',
-                    hint: {
-                        text: 'You have told us there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all primary school classes'
-                    } if false,
                     type: 'number',
                     label: {
                         text: 'For all primary school classes'
@@ -75,9 +69,6 @@
                     name: 'p-withdrawn-infant',
                     value: data['p-withdrawn-infant'] if data['p-withdrawn-infant'] else '',
                     classes: 'govuk-input--width-5',
-                    hint: {
-                        text: 'You have told us there were ' + infantRefNumber | friendlyNumber + ' appeals lodged for infant classes'
-                    } if false,
                     type: 'number',
                     errorMessage: {
                         text: 'There cannot be more withdrawn appeals for infant classes than all classes combined'
@@ -87,7 +78,7 @@
                     }
                 }) }}
 
-                <input type="hidden" name="success-page" value="{{ '#root#/primary/check-outcomes.html' if data['from-p-outcome-totals'] == 'true' else '#root#/primary/in-favour.html' }}" />
+                <input type="hidden" name="success-page" value="{{ '#root#/primary/check-lodged.html' if data['from-p-lodged-totals'] == 'true' else '#root#/primary/heard.html' }}" />
                 
 
                 {{ govukButton ({

@@ -49,11 +49,17 @@
                 <span class="govuk-caption-xl">Primary schools</span>
                 <h1 class="govuk-heading-xl">How many appeals were rejected?</h1>
 
+                {% set allRefNumber = (data['p-lodged-all'] | int - data['p-withdrawn-all'] | int - data['p-in-favour-all'] | int) %}
+                {% set infantRefNumber = (data['p-lodged-infant'] | int - data['p-withdrawn-infant'] | int - data['p-in-favour-infant'] | int) %}
+
                 {{ govukInput ({
                     id: 'p-rejected-all',
                     name: 'p-rejected-all',
                     value: data['p-rejected-all'] if data['p-rejected-all'] else '',
                     classes: 'govuk-input--width-5',
+                    hint: {
+                        text: 'Based on what you have told us, it appears there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all primary school classes that have not been withdrawn or decided in the favour of parents'
+                    } if false,
                     label: {
                         text: 'For all primary school classes'
                     }
@@ -64,6 +70,9 @@
                     name: 'p-rejected-infant',
                     value: data['p-rejected-infant'] if data['p-rejected-infant'] else '',
                     classes: 'govuk-input--width-5',
+                    hint: {
+                        text: 'Based on what you have told us, it appears there were ' + infantRefNumber | friendlyNumber + ' appeals lodged for infant classes that have not been withdrawn or decided in the favour of parents'
+                    } if false,
                     type: 'number',
                     errorMessage: {
                         text: 'There cannot be more appeals rejected for infant classes than all classes combined'
