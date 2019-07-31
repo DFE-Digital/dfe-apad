@@ -204,24 +204,6 @@
                     rows: [
                         {
                             key: {
-                                text: 'Total heard by an appeals panel'
-                            },
-                            value: {
-                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum | friendlyNumber
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'check-heard.html?from-p-outcome-totals=true',
-                                        visuallyHiddenText: 'heard'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
                                 text: 'Withdrawn'
                             },
                             value: {
@@ -234,6 +216,24 @@
                                         classes: 'govuk-link--no-visited-state',
                                         href: 'withdrawn.html?from-p-outcome-totals=true',
                                         visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'check-heard.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'heard'
                                     }
                                 ]
                             }

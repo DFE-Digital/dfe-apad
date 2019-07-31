@@ -70,6 +70,56 @@
                     rows: [
                         {
                             key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['s-withdrawn-all'] | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'withdrawn.html?from-s-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'check-heard.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total actioned'
+                            },
+                            value: {
+                                text: [data['s-in-favour-all'], data['s-rejected-all'], data['s-withdrawn-all']] | stringSum | friendlyNumber,
+                                classes: 'queried-data' if allClassesQuery
+                            }
+                        }
+                    ]
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
                                 text: 'Appeals lodged'
                             },
                             value: {
@@ -85,75 +135,6 @@
                                         visuallyHiddenText: 'total lodged'
                                     }
                                 ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Withdrawn'
-                            },
-                            value: {
-                                text: data['s-withdrawn-all'] | friendlyNumber,
-                                classes: 'queried-data' if allClassesQuery
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'withdrawn.html?from-s-outcome-totals=true',
-                                        visuallyHiddenText: 'withdrawn'
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }) }}
-
-                {{ govukSummaryList ({
-                    rows: [
-                        {
-                            key: {
-                                text: 'Found in favour of parents'
-                            },
-                            value: {
-                                text: data['s-in-favour-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'in-favour.html?from-s-outcome-totals=true',
-                                        visuallyHiddenText: 'total lodged'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Rejected'
-                            },
-                            value: {
-                                text: data['s-rejected-all']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'rejected.html?from-s-outcome-totals=true',
-                                        visuallyHiddenText: 'withdrawn'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Total heard by an appeals panel'
-                            },
-                            value: {
-                                text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum | friendlyNumber,
-                                classes: 'queried-data' if allClassesQuery
                             }
                         }
                     ]
