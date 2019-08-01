@@ -75,7 +75,8 @@ beforeContent %}
 	var nextPageRoutes = {
 		yes:
 			'{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
-		no: 'any-schools-confirm.html'
+		no:
+			'{{ "../check-your-answers.html" if data["from-check"] == "true" else "../secondary/any-schools.html" }}'
 	}
 </script>
 
