@@ -29,11 +29,12 @@ beforeContent %}
 				secondary schools?
 			</h1>
 
-			<p>This includes any voluntary-controlled or community middle schools deemed as secondary schools.</p>
-
-			{{ govukInsetText ({
-				text: 'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
-			}) }}
+			{{
+				govukInsetText({
+					text:
+						'This includes any voluntary-controlled or community middle schools deemed as secondary schools.'
+				})
+			}}
 
 			{{
 				govukRadios({
@@ -61,8 +62,6 @@ beforeContent %}
 				})
 			}}
 
-			<input type="hidden" name="from-s-outcome-totals" value="false">
-
 			{{
 				govukButton({
 					html: 'Continue'
@@ -73,12 +72,12 @@ beforeContent %}
 </div>
 
 <script>
-
-    var nextPageRoutes = {
-        yes: '{{ "../check-your-answers.html" if data["any-secondary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
-        no: '{{ "../no-schools.html" if data["any-primary"] == "no" else ("../check-your-answers.html" if data["from-check"] == "true" else "../completion-time.html") }}'
-    }
-
+	var nextPageRoutes = {
+		yes:
+			'{{ "../check-your-answers.html" if data["any-secondary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
+		no:
+			'{{ "../no-schools.html" if data["any-primary"] == "no" else ("../check-your-answers.html" if data["from-check"] == "true" else "../completion-time.html") }}'
+	}
 </script>
 
 {% endblock %}

@@ -21,29 +21,30 @@ in favour of parents? {% endblock %} {% block beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form action="{{ 'check-outcomes.html' if data['from-s-outcome-totals'] == 'true' else 'rejected.html' }}">
+		<form
+			action="{{ 'check-heard.html' if data['from-s-outcome-totals'] == 'true' else 'rejected.html' }}"
+		>
 			<span class="govuk-caption-xl">Secondary schools</span>
 			<h1 class="govuk-heading-xl">
 				How many appeals were decided in favour of parents?
 			</h1>
 
-			{{
-				govukInsetText({
-					text:
-						'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
-				})
-			}}
+			{% set allRefNumber = (data['p-lodged-all'] | int -
+			data['p-withdrawn-all'] | int) %}
 
 			{{ govukInput ({
                     id: 's-in-favour-all',
                     name: 's-in-favour-all',
                     value: data['s-in-favour-all'] if data['s-in-favour-all'] else '',
-                    classes: 'govuk-input--width-5',
+					classes: 'govuk-input--width-5',
+					hint: {
+                        text: 'Based on what you have told us, it appears there were ' + allRefNumber | friendlyNumber + ' appeals lodged for all secondary school classes that have not been withdrawn'
+                    } if false,
                     label: {
                         text: 'For all secondary school classes'
                     }
-                }) }}
-
+				}) }}
+				
 			{{
 				govukButton({
 					html: 'Continue'

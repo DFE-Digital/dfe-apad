@@ -1,0 +1,83 @@
+{% extends 'layout.html' %} {% block pageTitle %} Who can we contact if we have
+questions about this census? {% endblock %} {% block beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+{{
+	govukBackLink({
+		text: 'Back',
+		href: 'javascript:history.back()'
+	})
+}}
+
+{% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form
+			action="../primary/any-schools.html"
+		>
+            <span class="govuk-caption-xl">Contact details</span>
+			<h1 class="govuk-heading-xl">
+				Who can we contact if we have questions about this collection?
+			</h1>
+
+			{{ govukInput ({
+                    id: 'first-name',
+                    name: 'first-name',
+                    value: data['first-name'] if data['first-name'] else '',
+                    classes: 'govuk-input--width-20',
+                    label: {
+                        text: 'First name',
+                        classes: 'govuk-input--width-20'
+                    }
+                }) }}
+
+			{{ govukInput ({
+                    id: 'last-name',
+                    name: 'last-name',
+                    value: data['last-name'] if data['last-name'] else '',
+                    classes: 'govuk-input--width-20',
+                    label: {
+                        text: 'Last name'
+                    }
+                }) }}
+
+			{{ govukInput ({
+                    id: 'email-address',
+                    name: 'email-address',
+                    value: data['email-address'] if data['email-address'] else '',
+                    classes: 'govuk-input--width-20',
+                    type: 'email',
+                    label: {
+                        text: 'Email address'
+                    }
+                }) }}
+
+			{{ govukInput ({
+                    id: 'phone-number',
+                    name: 'phone-number',
+                    value: data['phone-number'] if data['phone-number'] else '',
+                    classes: 'govuk-input--width-20',
+                    label: {
+                        text: 'Telephone number'
+                    }
+                }) }}
+
+			{{
+				govukButton({
+					html: 'Continue'
+				})
+			}}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

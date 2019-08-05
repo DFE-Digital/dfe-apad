@@ -1,5 +1,6 @@
-{% extends 'layout.html' %} {% block pageTitle %} How many of these lodged
-appeals were heard by an appeals panel? {% endblock %} {% block beforeContent %}
+{% extends 'layout.html' %} {% block pageTitle %} How many appeals were lodged
+by parents for admissions to primary schools? {% endblock %} {% block
+beforeContent %}
 
 {{
 	govukPhaseBanner({
@@ -21,12 +22,15 @@ appeals were heard by an appeals panel? {% endblock %} {% block beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form action="check-lodged.html">
+		<form
+			action="{{ 'check-outcomes.html' if data['from-s-outcome-totals'] == 'true' else 'withdrawn.html' }}"
+		>
 			<span class="govuk-caption-xl">Secondary schools</span>
 			<h1 class="govuk-heading-xl">
-				How many of the lodged appeals were heard by an appeals panel?
+				How many appeals were lodged by parents for admissions to secondary
+				schools?
 			</h1>
-			
+
 			{{
 				govukInsetText({
 					text:
@@ -35,9 +39,9 @@ appeals were heard by an appeals panel? {% endblock %} {% block beforeContent %}
 			}}
 
 			{{ govukInput ({
-                    id: 's-heard-all',
-                    name: 's-heard-all',
-                    value: data['s-heard-all'] if data['s-heard-all'] else '',
+                    id: 's-lodged-all',
+                    name: 's-lodged-all',
+                    value: data['s-lodged-all'] if data['s-lodged-all'] else '',
                     classes: 'govuk-input--width-5',
                     label: {
                         text: 'For all secondary school classes'

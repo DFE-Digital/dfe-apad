@@ -1,5 +1,5 @@
-{% extends 'layout.html' %} {% block pageTitle %} How many of these lodged
-appeals were heard by an appeals panel? {% endblock %} {% block beforeContent %}
+{% extends 'layout.html' %} {% block pageTitle %} How long did it take to
+complete this data collection? {% endblock %} {% block beforeContent %}
 
 {{
 	govukPhaseBanner({
@@ -21,26 +21,26 @@ appeals were heard by an appeals panel? {% endblock %} {% block beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form action="check-lodged.html">
-			<span class="govuk-caption-xl">Secondary schools</span>
+		<form action="check-your-answers.html">
 			<h1 class="govuk-heading-xl">
-				How many of the lodged appeals were heard by an appeals panel?
+				How long did this data collection take to complete?
 			</h1>
-			
+
 			{{
 				govukInsetText({
 					text:
-						'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
+						'Include the time it took to gather the required information.'
 				})
 			}}
 
 			{{ govukInput ({
-                    id: 's-heard-all',
-                    name: 's-heard-all',
-                    value: data['s-heard-all'] if data['s-heard-all'] else '',
+                    id: 'completion-time',
+                    name: 'completion-time',
+                    value: data['completion-time'] if data['completion-time'] else '',
                     classes: 'govuk-input--width-5',
+                    type: 'number',
                     label: {
-                        text: 'For all secondary school classes'
+                        text: 'To the nearest whole hour'
                     }
                 }) }}
 

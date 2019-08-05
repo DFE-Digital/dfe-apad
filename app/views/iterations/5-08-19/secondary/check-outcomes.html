@@ -1,0 +1,211 @@
+{% extends 'layout.html' %}
+
+{% set allHeardTotal = [data['s-in-favour-all'], data['s-rejected-all']] | stringSum %}
+{% set infantHeardTotal = [data['s-in-favour-infant'], data['s-rejected-infant']] | stringSum %}
+
+{% set allClassesQuery = (data['s-lodged-all'] | int) > [data['s-withdrawn-all'], allHeardTotal] | stringSum %}
+{% set allClassesError = (data['s-lodged-all'] | int) < [data['s-withdrawn-all'], allHeardTotal] | stringSum %}
+
+{% set allClassesFine = not allClassesQuery and not allClassesError %}
+
+{% set infantClassesQuery = (data['s-lodged-infant'] | int) > [data['s-withdrawn-infant'], infantHeardTotal] | stringSum %}
+{% set infantClassesError = (data['s-lodged-infant'] | int) < [data['s-withdrawn-infant'], infantHeardTotal] | stringSum %}
+
+{% set infantClassesFine = not infantClassesQuery and not infantClassesError %}
+
+{% set hasAllError = data['allQueryError'] == 'true' %}
+{% set hasInfantError = data['infantQueryError'] == 'true'  %}
+
+{% block pageTitle %}
+    Check the total number of appeal outcomes
+{% endblock %}
+
+{% block beforeContent %}
+
+{{
+	govukPhaseBanner({
+		tag: {
+			text: 'prototype'
+		},
+		html: 'This service is in development. Do not submit any real data.'
+	})
+}}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <form action="/validate-queries" method="post">
+
+                <input type="hidden" name="success-page" value="{{ '#root#/check-your-answers.html' if data['from-check'] else '#root#/completion-time.html' }}">
+
+
+                {% if hasAllError or hasInfantError %}
+
+                    {{ govukErrorSummary({
+                        titleText: 'There is a problem',
+                        errorList: [
+                            {
+                                text: 'You must give a reason why there are unresolved appeals',
+                                href: '#s-lodged-query-all-error'
+                            } if hasAllError
+                        ]
+                    }) }}
+
+                {% endif %}
+
+                <span class="govuk-caption-xl">Secondary schools</span>
+                <h1 class="govuk-heading-xl">Check the total number of appeal outcomes against the number of appeals heard</h1>
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Withdrawn'
+                            },
+                            value: {
+                                text: data['s-withdrawn-all'] | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'withdrawn.html?from-s-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total heard by an appeals panel'
+                            },
+                            value: {
+                                text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum | friendlyNumber
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'check-heard.html?from-p-outcome-totals=true',
+                                        visuallyHiddenText: 'withdrawn'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Total actioned'
+                            },
+                            value: {
+                                text: [data['s-in-favour-all'], data['s-rejected-all'], data['s-withdrawn-all']] | stringSum | friendlyNumber,
+                                classes: 'queried-data' if allClassesQuery
+                            }
+                        }
+                    ]
+                }) }}
+
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Appeals lodged'
+                            },
+                            value: {
+                                text: data['s-lodged-all'] | friendlyNumber,
+                                classes: 'queried-data' if allClassesQuery
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'lodged.html?from-s-outcome-totals=true',
+                                        visuallyHiddenText: 'total lodged'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }) }}
+
+                {% if not allClassesFine %}
+
+                    {% if allClassesQuery %}
+                    
+                         {% set allQueryRefNumber = (data['s-lodged-all'] | int) - [data['s-withdrawn-all'], allHeardTotal] | stringSum %}
+
+                        {% if allQueryRefNumber == 1 %}
+
+                            {{ govukWarningText ({
+                                text: 'Based on what you have told us it appears that there was 1 appeal that was neither withdrawn or heard by an appeals panel',
+                                iconFallbackText: 'Query',
+                                classes: 'query-notice'
+                            }) }}
+
+                        {% else %}
+
+                            {{ govukWarningText ({
+                                text: 'Based on what you have told us it appears that there were ' + allQueryRefNumber | friendlyNumber + ' appeals that were neither withdrawn or heard by an appeals panel',
+                                iconFallbackText: 'Query',
+                                classes: 'query-notice'
+                            }) }}
+
+                        {% endif %}
+
+                        {% if not allClassesError and not infantClassesError %}
+
+                            {{ govukTextarea({
+                                id: 's-lodged-query-all',
+                                name: 's-lodged-query-all',
+                                value: data['s-lodged-query-all'] if data['s-lodged-query-all'] else '',
+                                errorMessage: {
+                                    text: 'You must give a reason why there are unresolved appeals'
+                                } if hasAllError,
+                                label: {
+                                    text: 'Explain why there were ' + (data['s-lodged-all'] | int - [data['s-withdrawn-all'], allHeardTotal] | stringSum) + ' unresolved appeals'
+                                }
+                            }) }}
+
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% if allClassesError %}
+
+                        {{ govukErrorMessage({
+                            text: 'There cannot be more appeals actioned than the total number lodged, you must fix this before you can continue',
+                            visuallyHiddenText: 'Error'
+                        }) }}
+
+                    {% endif %}
+
+                {% endif %}
+
+               
+                {% if not allClassesError and not infantClassesError %}
+
+                    {{ govukButton ({
+                        html: 'Continue'
+                    }) }}
+
+                {% endif %}
+
+            </form>
+
+        </div>
+
+</div>
+
+{% endblock %}

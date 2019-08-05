@@ -1,6 +1,10 @@
-{% extends 'layout.html' %} {% block pageTitle %} Does your local authority have
-any voluntary-controlled or community primary schools? {% endblock %} {% block
-beforeContent %}
+{% extends 'layout.html' %}
+
+{% block pageTitle %}
+    Does your local authority have any voluntary-controlled or community primary schools?
+{% endblock %}
+
+{% block beforeContent %}
 
 {{
 	govukPhaseBanner({
@@ -11,73 +15,72 @@ beforeContent %}
 	})
 }}
 
-{{
-	govukBackLink({
-		text: 'Back',
-		href: 'javascript:history.back()'
-	})
-}}
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
 
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<form method="post">
-			<span class="govuk-caption-xl">Primary schools</span>
-			<h1 class="govuk-heading-xl">
-				Does your local authority have any voluntary-controlled or community
-				primary schools?
-			</h1>
 
-			{{
-				govukInsetText({
-					text:
-						'This includes any voluntary-controlled or community middle schools deemed as primary schools.'
-				})
-			}}
+        <div class="govuk-grid-column-two-thirds">
 
-			{{
-				govukRadios({
-					classes: 'govuk-radios--inline',
-					idPrefix: 'any-primary',
-					name: 'any-primary',
-					fieldset: {
-						legend: {
-							text:
-								'Does your local authority have any voluntary-controlled or community primary schools?',
-							isPageHeading: true,
-							classes: 'govuk-visually-hidden'
-						}
-					},
-					items: [
-						{
-							text: 'Yes',
-							value: 'yes'
-						},
-						{
-							text: 'No',
-							value: 'no'
-						}
-					]
-				})
-			}}
+            <form method="post">
 
-			{{
-				govukButton({
-					html: 'Continue'
-				})
-			}}
-		</form>
-	</div>
+                <span class="govuk-caption-xl">Primary schools</span>
+                <h1 class="govuk-heading-xl">Does your local authority have any voluntary-controlled or community primary schools?</h1>
+
+                <p>This includes any voluntary-controlled or community middle schools deemed as primary schools.</p>
+
+                {{ govukInsetText ({
+                    text: 'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
+                }) }}
+
+                {{ govukRadios ({
+                    classes: 'govuk-radios--inline',
+                    idPrefix: 'any-primary',
+                    name: 'any-primary',
+                    fieldset: {
+                        legend: {
+                            text: 'Does your local authority have any voluntary-controlled or community primary schools?',
+                            isPageHeading: true,
+                            classes: 'govuk-visually-hidden'
+                        }
+                            },
+                            items: [
+                        {
+                            text: 'Yes',
+                            value: 'yes'
+                        },
+                        {
+                            text: 'No',
+                            value: 'no'
+                        }
+                    ]
+                }) }}
+
+                <input type="hidden" name="from-p-outcome-totals" value="false">
+
+                {{ govukButton ({
+                    html: 'Continue'
+                }) }}
+
+            </form>
+
+        </div>
+
 </div>
 
 <script>
-	var nextPageRoutes = {
-		yes:
-			'{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
-		no:
-			'{{ "../check-your-answers.html" if data["from-check"] == "true" else "../secondary/any-schools.html" }}'
-	}
+
+    var nextPageRoutes = {
+        yes: '{{ "../check-your-answers.html" if data["any-primary"] == "yes" and data["from-check"] == "true" else "lodged.html" }}',
+        no: '{{ "../check-your-answers.html" if data["from-check"] == "true" else "../secondary/any-schools.html" }}'
+    }
+
 </script>
 
 {% endblock %}
