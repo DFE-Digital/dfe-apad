@@ -21,9 +21,11 @@ in favour of parents? {% endblock %} {% block beforeContent %}
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form action="{{ 'check-outcomes.html' if data['from-s-outcome-totals'] == 'true' else 'rejected.html' }}">
+		<form
+			action="{{ 'check-outcomes.html' if data['from-s-outcome-totals'] == 'true' else 'rejected.html' }}"
+		>
 			<span class="govuk-caption-xl">Secondary schools</span>
-			<h1 class="govuk-heading-xl">
+			<h1 class="govuk-heading-l">
 				How many appeals were decided in favour of parents?
 			</h1>
 

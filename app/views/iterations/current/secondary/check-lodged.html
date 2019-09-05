@@ -48,7 +48,7 @@ appeals {% endblock %} {% block beforeContent %}
 
 
 			<span class="govuk-caption-xl">Secondary schools</span>
-			<h1 class="govuk-heading-xl">
+			<h1 class="govuk-heading-l">
 				Check the appeals that were withdrawn or heard by an appeals panel
 				against the total that were lodged
 			</h1>
@@ -60,7 +60,7 @@ appeals {% endblock %} {% block beforeContent %}
                             text: 'Withdrawn'
                         },
                         value: {
-                            text: data['s-withdrawn-all']
+                            text: data['s-withdrawn-all'] | friendlyNumber
                         },
                         actions: {
                             items: [
@@ -78,7 +78,7 @@ appeals {% endblock %} {% block beforeContent %}
                             text: 'Heard'
                         },
                         value: {
-                            text: data['s-heard-all']
+                            text: data['s-heard-all'] | friendlyNumber
                         },
                         actions: {
                             items: [
@@ -96,7 +96,7 @@ appeals {% endblock %} {% block beforeContent %}
                             text: 'Total actioned'
                         },
                         value: {
-                            text: [data['s-withdrawn-all'], data['s-heard-all']] | stringSum
+                            html: ('<i class="error-flag">!</i>' if allClassesError) +('<i class="query-flag">?</i>' if allClassesQuery) + [data['s-withdrawn-all'], data['s-heard-all']] | stringSum | friendlyNumber
                         }
                     }
                 }
@@ -109,7 +109,7 @@ appeals {% endblock %} {% block beforeContent %}
                             text: 'Total lodged'
                         },
                         value: {
-                            text: data['s-lodged-all']
+                            html: ('<i class="error-flag">!</i>' if allClassesError) + ('<i class="query-flag">?</i>' if allClassesQuery) + data['s-lodged-all'] | friendlyNumber
                         },
                         actions: {
                             items: [
@@ -142,7 +142,7 @@ appeals {% endblock %} {% block beforeContent %}
                                 text: 'You must give a reason why there are unresolved appeals'
                             } if hasAllError,
                             label: {
-                                text: 'Explain why there were ' + (data['s-lodged-all'] | int - [data['s-withdrawn-all'], data['s-heard-all']] | stringSum) + ' unresolved appeals'
+                                text: 'Explain why there were ' + (data['s-lodged-all'] | int - [data['s-withdrawn-all'], data['s-heard-all']] | stringSum) | friendlyNumber + ' unresolved appeals'
                             }
                         }) }}
 

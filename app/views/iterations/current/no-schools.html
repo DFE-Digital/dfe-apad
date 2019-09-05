@@ -1,5 +1,6 @@
-{% extends 'layout.html' %} {% block pageTitle %} You have told us that your local authority has no voluntary-controlled or community primary or secondary schools, is this correct? {% endblock %} {% block
-beforeContent %}
+{% extends 'layout.html' %} {% block pageTitle %} You have told us that your
+local authority has no voluntary-controlled or community primary or secondary
+schools, is this correct? {% endblock %} {% block beforeContent %}
 
 {{
 	govukPhaseBanner({
@@ -22,9 +23,9 @@ beforeContent %}
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
-			<h1 class="govuk-heading-xl">
-				You have told us that your local authority has no voluntary-controlled or community
-				primary or secondary schools, is this correct?
+			<h1 class="govuk-heading-l">
+				You have told us that your local authority has no voluntary-controlled
+				or community primary or secondary schools, is this correct?
 			</h1>
 
 			{{
@@ -70,12 +71,10 @@ beforeContent %}
 </div>
 
 <script>
-
-    var nextPageRoutes = {
-        yes: 'completion-time.html',
-        no: 'primary/any-schools.html'
-    }
-
+	var nextPageRoutes = {
+		yes: 'completion-time.html',
+		no: 'primary/any-schools.html'
+	}
 </script>
 
 {% endblock %}

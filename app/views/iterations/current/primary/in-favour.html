@@ -38,13 +38,16 @@ in favour of parents? {% endblock %} {% block beforeContent %}
 			{% endif %}
 
 			<span class="govuk-caption-xl">Primary schools</span>
-			<h1 class="govuk-heading-xl">
+			<h1 class="govuk-heading-l">
 				How many appeals were decided in favour of parents?
 			</h1>
 
-			{{ govukInsetText ({
-				text: 'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
-			}) }}
+			{{
+				govukInsetText({
+					text:
+						'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
+				})
+			}}
 
 			{{ govukInput ({
                     id: 'p-in-favour-all',

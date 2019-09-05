@@ -39,16 +39,22 @@ beforeContent %}
 			{% endif%}
 
 			<span class="govuk-caption-xl">Primary schools</span>
-			<h1 class="govuk-heading-xl">
+			<h1 class="govuk-heading-l">
 				How many of the appeals lodged were withdrawn before reaching an appeals
 				panel?
 			</h1>
 
-			<p>Include appeals that were no longer needed because a school place was offered before a hearing.</p>
+			<p>
+				Include appeals that were no longer needed because a school place was
+				offered before a hearing.
+			</p>
 
-			{{ govukInsetText ({
-				text: 'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
-			}) }}
+			{{
+				govukInsetText({
+					text:
+						'Only tell us about schools which will be voluntary-controlled or community schools on 16 January 2020.'
+				})
+			}}
 
 			{{ govukInput ({
                     id: 'p-withdrawn-all',

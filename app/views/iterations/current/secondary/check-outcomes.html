@@ -27,7 +27,7 @@ appeal outcomes {% endblock %} {% block beforeContent %}
 	<div class="govuk-grid-column-two-thirds">
 		<form action="{{ '../check-your-answers.html' if data['from-check'] else '../completion-time.html' }}">
 			<span class="govuk-caption-xl">Secondary schools</span>
-			<h1 class="govuk-heading-xl">
+			<h1 class="govuk-heading-l">
 				Check the total number of appeal outcomes against the number of appeals heard
 			</h1>
 
@@ -38,7 +38,7 @@ appeal outcomes {% endblock %} {% block beforeContent %}
 							text: 'In favour of parents'
 						},
 						value: {
-							text: data['s-in-favour-all']
+							text: data['s-in-favour-all'] | friendlyNumber
 						},
 						actions: {
 							items: [
@@ -74,7 +74,7 @@ appeal outcomes {% endblock %} {% block beforeContent %}
 							text: 'Total appeal outcomes'
 						},
 						value: {
-							text: [data['s-in-favour-all'], data['s-rejected-all']] | stringSum
+							html: ('<i class="error-flag">!</i>' if allClassesError) + [data['s-in-favour-all'], data['s-rejected-all']] | stringSum  | friendlyNumber
 						}
 					}
 				]
@@ -87,7 +87,7 @@ appeal outcomes {% endblock %} {% block beforeContent %}
 							text: 'Appeals heard'
 						},
 						value: {
-							text: data['s-heard-all']
+							html: ('<i class="error-flag">!</i>' if allClassesError) + data['s-heard-all'] | friendlyNumber
 						},
 						actions: {
 							items: [

@@ -36,7 +36,7 @@
             <form action="{{ '../check-your-answers.html' if data['from-check'] else '../secondary/any-schools.html' }}">
 
                 <span class="govuk-caption-xl">Primary schools</span>
-                <h1 class="govuk-heading-xl">Check the total number of appeal outcomes against the number of appeals heard</h1>
+                <h1 class="govuk-heading-l">Check the total number of appeal outcomes against the number of appeals heard</h1>
 
                 <h2 class="govuk-heading-m">All classes</h2>
 
@@ -47,7 +47,7 @@
                                 text: 'In favour of parents'
                             },
                             value: {
-                                text: data['p-in-favour-all']
+                                text: data['p-in-favour-all'] | friendlyNumber
                             },
                             actions: {
                                 items: [
@@ -65,7 +65,7 @@
                                 text: 'Rejected'
                             },
                             value: {
-                                text: data['p-rejected-all']
+                                text: data['p-rejected-all'] | friendlyNumber
                             },
                             actions: {
                                 items: [
@@ -83,7 +83,7 @@
                                 text: 'Total appeal outcomes'
                             },
                             value: {
-                                text: [data['p-in-favour-all'], data['p-rejected-all']] | stringSum
+                                html: ('<i class="error-flag">!</i>' if allClassesError) + [data['p-in-favour-all'], data['p-rejected-all']] | stringSum | friendlyNumber
                             }
                         }
                     ]
@@ -96,7 +96,7 @@
                                 text: 'Appeals heard'
                             },
                             value: {
-                                text: data['p-heard-all']
+                                html: ('<i class="error-flag">!</i>' if allClassesError) + data['p-heard-all'] | friendlyNumber
                             },
                             actions: {
                                 items: [
@@ -130,7 +130,7 @@
                                 text: 'In favour of parents'
                             },
                             value: {
-                                text: data['p-in-favour-infant']
+                                text: data['p-in-favour-infant'] | friendlyNumber
                             },
                             actions: {
                                 items: [
@@ -148,7 +148,7 @@
                                 text: 'Rejected'
                             },
                             value: {
-                                text: data['p-rejected-infant']
+                                text: data['p-rejected-infant'] | friendlyNumber
                             },
                             actions: {
                                 items: [
@@ -166,7 +166,7 @@
                                 text: 'Total appeal outcomes'
                             },
                             value: {
-                                text: [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum
+                                html: ('<i class="error-flag">!</i>' if infantClassesError) + [data['p-in-favour-infant'], data['p-rejected-infant']] | stringSum | friendlyNumber
                             }
                         }
                     ]
@@ -179,7 +179,7 @@
                                 text: 'Appeals heard'
                             },
                             value: {
-                                text: data['p-heard-infant']
+                                html: ('<i class="error-flag">!</i>' if infantClassesError) + data['p-heard-infant'] | friendlyNumber
                             },
                             actions: {
                                 items: [
