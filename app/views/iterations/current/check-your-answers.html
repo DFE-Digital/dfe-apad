@@ -33,69 +33,6 @@
 
                 <h1 class="govuk-heading-l">Check your answers before sending this data collection</h1>
 
-                <h2 class="govuk-heading-m">Contact details</h2>
-                
-                {{ govukSummaryList ({
-                    rows: [
-                        {
-                            key: {
-                                text: 'Name'
-                            },
-                            value: {
-                                text: data['first-name'] + ' ' + data['last-name']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'contact-details/contact-details.html?from-check=true',
-                                        classes: 'govuk-link--no-visited-state',
-                                        visuallyHiddenText: 'name'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Email address'
-                            },
-                            value: {
-                                text: data['email-address']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'contact-details/contact-details.html?from-check=true',
-                                        classes: 'govuk-link--no-visited-state',
-                                        visuallyHiddenText: 'email address'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            key: {
-                                text: 'Phone number'
-                            },
-                            value: {
-                                text: data['phone-number']
-                            },
-                            actions: {
-                                items: [
-                                    {
-                                        text: 'Change',
-                                        classes: 'govuk-link--no-visited-state',
-                                        href: 'contact-details/contact-details.html?from-check=true',
-                                        classes: 'govuk-link--no-visited-state',
-                                        visuallyHiddenText: 'email address'
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }) }}
 
                 <h2 class="govuk-heading-m">Admission appeals for primary schools: all classes</h2>
 
@@ -527,6 +464,70 @@
                             }
                         }
                     ]
+                }) }}
+
+                 <h2 class="govuk-heading-m">Contact details</h2>
+                
+                {{ govukSummaryList ({
+                    rows: [
+                        {
+                            key: {
+                                text: 'Name'
+                            },
+                            value: {
+                                text: data['first-name'] + ' ' + data['last-name']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'contact-details/contact-details.html?from-check=true',
+                                        classes: 'govuk-link--no-visited-state',
+                                        visuallyHiddenText: 'name'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Email address'
+                            },
+                            value: {
+                                text: data['email-address']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'contact-details/contact-details.html?from-check=true',
+                                        classes: 'govuk-link--no-visited-state',
+                                        visuallyHiddenText: 'email address'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            key: {
+                                text: 'Phone number'
+                            },
+                            value: {
+                                text: data['phone-number']
+                            },
+                            actions: {
+                                items: [
+                                    {
+                                        text: 'Change',
+                                        classes: 'govuk-link--no-visited-state',
+                                        href: 'contact-details/contact-details.html?from-check=true',
+                                        classes: 'govuk-link--no-visited-state',
+                                        visuallyHiddenText: 'email address'
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }) }}
 
                 <h2 class="govuk-heading-m">Now send the data collection</h2>
